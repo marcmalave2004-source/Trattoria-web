@@ -1,0 +1,3007 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>La Trattoria Lleida</title>
+<meta name="description" content="La Trattoria, pizzería italiana en Lleida desde 2010: pizza al método napolitano, pasta casera y horno de leña. Reserva mesa online en Carrer Serra del Cadí, 7.">
+<meta name="theme-color" content="#FBF6EC">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500..700&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Jost:wght@300..600&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Restaurant", "name": "Pizzería La Trattoria Italiana", "servesCuisine": "Italiana", "telephone": "+34973220841", "address": {"@type": "PostalAddress", "streetAddress": "Carrer Serra del Cadí, 7", "postalCode": "25006", "addressLocality": "Lleida", "addressCountry": "ES"}, "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], "opens": "13:00", "closes": "17:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Wednesday", "Thursday", "Sunday"], "opens": "20:00", "closes": "23:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday", "Saturday"], "opens": "20:00", "closes": "23:59"}]}</script>
+<style>
+/* Concepto: "la trattoria dibujada a mano". Papel crema, tinta, el azul celeste del logo
+   como mantel de cuadros, pomodoro y albahaca como acentos. Fraunces para titulares,
+   Caveat para las notas escritas a mano, Jost para leer. */
+:root{
+  color-scheme:light;
+  --bg:#FBF6EC;
+  --bg-alt:#F4EDDF;
+  --surface:#F7F1E4;
+  --card:#FFFDF8;
+  --border:#E6DCC8;
+  --text:#1F1D1A;
+  --muted:#6B645A;
+  --ink:#1F1D1A;
+  --accent:#D2452E;
+  --accent-lt:#B5361F;
+  --accent-dk:#F1C4B8;
+  --accent-soft:#FBE7E1;
+  --sky:#9DB8D6;
+  --sky-soft:#E3ECF6;
+  --sky-deep:#2E4A6E;
+  --sage:#5B7F4A;
+  --sage-soft:#E7EEDD;
+  --sage-deep:#34502A;
+  --sun:#F2C14E;
+  --sun-soft:#FBEFCF;
+  --danger:#C23A3A;
+  --success:#2E8B57;
+  --info:#2E4A6E;
+  --radius:18px;
+  --radius-sm:12px;
+  --shadow:0 18px 44px -18px rgba(46,40,30,.22);
+  --font-display:'Fraunces','Iowan Old Style',Georgia,serif;
+  --font-hand:'Caveat','Segoe Print','Bradley Hand',cursive;
+  --font-body:'Jost','Futura','Avenir Next',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --ease:cubic-bezier(.2,.75,.2,1);
+  --gingham:
+    linear-gradient(90deg,rgba(157,184,214,.55) 50%,transparent 50%) 0 0/28px 28px,
+    linear-gradient(0deg,rgba(157,184,214,.55) 50%,transparent 50%) 0 0/28px 28px,
+    #FFFDF8;
+}
+
+
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+h1,h2,h3{font-family:var(--font-display)}
+button{cursor:pointer;border:none;font-family:var(--font-body)}
+input,select,textarea{font-family:var(--font-body)}
+a{color:inherit;text-decoration:none}
+
+/* DEMO BANNER */
+#demo-banner{
+  background:linear-gradient(90deg,#7b4f00,var(--accent),#7b4f00);
+  color:#000;font-weight:700;font-size:.78rem;letter-spacing:.12em;
+  text-align:center;padding:7px 12px;position:sticky;top:0;z-index:9999;
+  text-transform:uppercase;
+}
+
+/* HEADER */
+#header{
+  background:linear-gradient(180deg,#0f0f0f 0%,var(--bg) 100%);
+  border-bottom:1px solid var(--border);
+  padding:28px 20px 20px;text-align:center;
+}
+#header h1{
+  font-size:clamp(1.6rem,5vw,2.4rem);color:var(--accent);letter-spacing:.04em;
+  margin-bottom:4px;cursor:default;user-select:none;
+}
+#header .tagline{color:var(--muted);font-size:.85rem;letter-spacing:.08em;text-transform:uppercase}
+#header .meta{display:flex;justify-content:center;gap:20px;margin-top:14px;flex-wrap:wrap}
+#header .meta span{font-size:.8rem;color:var(--muted);display:flex;align-items:center;gap:5px}
+#header .meta span b{color:var(--text)}
+
+/* SYNC STATUS */
+#sync-status{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:6px;font-size:.72rem;font-weight:600;letter-spacing:.05em;
+  text-transform:uppercase;border-bottom:1px solid var(--border);
+}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex-shrink:0}
+.sync-dot.live{background:var(--success);animation:pulse 2s infinite}
+.sync-dot.offline{background:var(--muted)}
+.sync-dot.error{background:var(--danger)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* PROGRESS */
+#progress-wrap{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 20px}
+.prog-steps{display:flex;justify-content:center;gap:0;max-width:480px;margin:0 auto}
+.prog-step{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative}
+.prog-step:not(:last-child)::after{
+  content:'';position:absolute;top:14px;left:60%;width:80%;height:2px;
+  background:var(--border);z-index:0;transition:background .3s;
+}
+.prog-step.done:not(:last-child)::after{background:var(--accent)}
+.prog-dot{
+  width:28px;height:28px;border-radius:50%;border:2px solid var(--border);
+  background:var(--card);display:flex;align-items:center;justify-content:center;
+  font-size:.72rem;font-weight:700;color:var(--muted);z-index:1;transition:all .3s;
+}
+.prog-step.active .prog-dot{border-color:var(--accent);background:var(--accent);color:#fff}
+.prog-step.done .prog-dot{border-color:var(--accent);background:var(--accent-dk);color:var(--accent-lt)}
+.prog-label{font-size:.65rem;color:var(--muted);text-align:center;transition:color .3s}
+.prog-step.active .prog-label{color:var(--accent)}
+
+/* MAIN */
+#app{max-width:600px;margin:0 auto;padding:24px 16px 80px}
+
+/* CARDS */
+.step{display:none}
+.step.active{display:block}
+.card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:24px;margin-bottom:16px;box-shadow:var(--shadow);
+}
+.card h2{font-size:1.25rem;color:var(--accent);margin-bottom:4px}
+.card .sub{font-size:.82rem;color:var(--muted);margin-bottom:20px}
+
+/* FORM */
+.field{margin-bottom:16px}
+.field label{display:block;font-size:.8rem;color:var(--muted);margin-bottom:6px;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+.field input,.field select,.field textarea{
+  width:100%;background:var(--surface);border:1px solid var(--border);
+  color:var(--text);border-radius:var(--radius-sm);padding:12px 14px;
+  font-size:.95rem;transition:border .2s,box-shadow .2s;outline:none;
+}
+.field input:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(210,69,46,.15)}
+.field select{
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23D2452E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;padding-right:38px;cursor:pointer;
+}
+.field textarea{resize:vertical;min-height:80px}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted)}
+.field select option{background:var(--card)}
+
+/* BUTTONS */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:13px 24px;border-radius:var(--radius-sm);font-size:.9rem;
+  font-weight:600;transition:all .2s;letter-spacing:.03em;
+}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-lt)}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--muted)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn-danger{background:rgba(224,82,82,.15);border:1px solid var(--danger);color:var(--danger)}
+.btn-danger:hover{background:rgba(224,82,82,.25)}
+.btn-success{background:rgba(82,192,122,.15);border:1px solid var(--success);color:var(--success)}
+.btn-success:hover{background:rgba(82,192,122,.25)}
+.btn-full{width:100%}
+.btn-row{display:flex;gap:10px;margin-top:8px}
+.btn-row .btn{flex:1}
+
+/* CALENDAR */
+#cal-strip{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:20px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.cal-day{
+  flex:0 0 64px;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:10px 4px;text-align:center;cursor:pointer;transition:all .2s;
+}
+.cal-day:hover{border-color:var(--accent-dk)}
+.cal-day.selected{border-color:var(--accent);background:rgba(210,69,46,.1)}
+.cal-day.closed{opacity:.3;cursor:not-allowed}
+.cal-day.blocked{opacity:.25;cursor:not-allowed}
+.cal-dn{font-size:.65rem;text-transform:uppercase;color:var(--muted);letter-spacing:.06em}
+.cal-dd{font-size:1.3rem;font-weight:700;color:var(--text);line-height:1.1}
+.cal-dm{font-size:.65rem;color:var(--muted)}
+.cal-day.selected .cal-dd{color:var(--accent)}
+.cal-day.closed .cal-dn::after{content:'CERRADO';display:block;font-size:.55rem;color:var(--danger)}
+
+/* SLOTS */
+.slot-section{margin-bottom:18px}
+.slot-title{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;font-weight:600}
+.slots{display:flex;flex-wrap:wrap;gap:8px}
+.slot{
+  padding:8px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);
+  background:var(--surface);font-size:.85rem;font-weight:500;color:var(--text);
+  cursor:pointer;transition:all .2s;min-width:70px;text-align:center;
+}
+.slot:hover{border-color:var(--accent-dk)}
+.slot.selected{border-color:var(--accent);background:rgba(210,69,46,.12);color:var(--accent)}
+.slot.full{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+.slot.few{border-color:#b8860b;color:#b8860b}
+.slot-avail{font-size:.65rem;display:block;margin-top:2px;color:var(--muted)}
+
+/* WELCOME BACK */
+#welcome-back{
+  background:rgba(210,69,46,.1);border:1px solid var(--accent-dk);
+  border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:16px;
+  display:none;align-items:center;gap:12px;
+}
+#welcome-back .wb-text{font-size:.9rem}
+#welcome-back .wb-text b{color:var(--accent)}
+
+/* CONFIRM BOX */
+.confirm-box{
+  background:var(--surface);border:1px solid var(--accent-dk);
+  border-radius:var(--radius-sm);padding:20px;margin-bottom:20px;
+}
+.confirm-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:.88rem}
+.confirm-row:last-child{border-bottom:none}
+.confirm-row .lbl{color:var(--muted)}
+.confirm-row .val{font-weight:600;text-align:right}
+.confirm-row .val.gold{color:var(--accent)}
+
+/* SUCCESS */
+#step-5{text-align:center}
+.success-icon{font-size:3.5rem;margin-bottom:16px;animation:pop .4s ease}
+@keyframes pop{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+.booking-code{
+  font-family:var(--font-display);font-size:clamp(1.2rem,5vw,1.8rem);color:var(--accent);
+  letter-spacing:.12em;margin:16px 0;background:var(--surface);
+  border:1px solid var(--accent-dk);border-radius:var(--radius-sm);padding:14px;
+  word-break:break-all;overflow-wrap:break-word;white-space:normal;
+  display:block;text-align:center;
+}
+.cal-buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:20px 0}
+.cal-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:10px 18px;
+  border-radius:var(--radius-sm);font-size:.82rem;font-weight:600;
+  border:1px solid var(--border);color:var(--text);background:var(--card);
+  cursor:pointer;transition:all .2s;
+}
+.cal-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* TOAST */
+#toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:12px 20px;font-size:.85rem;z-index:9000;
+  transition:all .35s cubic-bezier(.34,1.56,.64,1);
+  white-space:nowrap;max-width:90vw;box-shadow:var(--shadow);
+}
+#toast.show{transform:translateX(-50%) translateY(0)}
+#toast.ok{border-color:var(--success);color:var(--success)}
+#toast.err{border-color:var(--danger);color:var(--danger)}
+#toast.info{border-color:var(--accent);color:var(--accent)}
+
+/* ADMIN */
+#admin-overlay{
+  display:none;position:fixed;inset:0;
+  background:var(--bg);z-index:8000;overflow-y:auto;
+}
+#admin-overlay.show{display:block}
+
+.admin-topbar{
+  background:linear-gradient(90deg,#111116,#17171e);
+  border-bottom:2px solid var(--accent-dk);
+  padding:14px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+  box-shadow:0 4px 24px rgba(0,0,0,.6);
+  flex-wrap:wrap;gap:12px;
+}
+.admin-topbar-left{display:flex;align-items:center;gap:14px}
+.admin-topbar-left h2{color:var(--accent);font-size:1.25rem;font-family:var(--font-display)}
+.admin-topbar-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+.admin-body{max-width:1100px;margin:0 auto;padding:28px 24px 80px}
+
+.admin-tabs{
+  display:flex;gap:0;margin-bottom:28px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:10px;padding:5px;
+  width:fit-content;flex-wrap:wrap;
+}
+.a-tab{
+  padding:9px 20px;border-radius:7px;border:none;
+  background:transparent;color:var(--muted);font-size:.82rem;font-weight:600;
+  cursor:pointer;transition:all .2s;white-space:nowrap;
+}
+.a-tab.active{
+  background:rgba(210,69,46,.12);color:var(--accent);
+  box-shadow:inset 0 0 0 1px var(--accent-dk);
+}
+.a-tab:hover:not(.active){color:var(--text)}
+.a-panel{display:none}
+.a-panel.active{display:block}
+
+/* TODAY BAR */
+.today-bar{
+  display:flex;gap:0;margin-bottom:24px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius-sm);overflow:hidden;
+}
+.today-stat{
+  flex:1;text-align:center;padding:16px 8px;
+  border-right:1px solid var(--border);
+}
+.today-stat:last-child{border-right:none}
+.today-stat .ts-num{display:block;font-size:1.8rem;font-weight:700;color:var(--accent);font-family:var(--font-display);line-height:1}
+.today-stat .ts-lbl{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:4px;display:block}
+.today-stat.ts-free .ts-num{color:var(--success)}
+
+/* ADMIN TABLE */
+.res-table{width:100%;border-collapse:collapse;font-size:.84rem}
+.res-table thead{background:rgba(37,50,42,.03)}
+.res-table th{
+  text-align:left;padding:11px 14px;color:var(--muted);
+  border-bottom:2px solid var(--border);font-weight:600;
+  font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;
+}
+.res-table td{
+  padding:13px 14px;border-bottom:1px solid var(--border);
+  vertical-align:middle;
+}
+.res-table tr:hover td{background:rgba(210,69,46,.04)}
+.res-row-dim{opacity:.45}
+.res-row-dim:hover{opacity:.65}
+
+/* NOMBRE + TELÉFONO en celda */
+.res-name{font-weight:600;color:var(--text);font-size:.88rem}
+.res-phone{font-size:.75rem;color:var(--muted);margin-top:2px}
+
+/* FECHA + HORA */
+.res-time{font-weight:700;color:var(--accent-lt);font-size:.92rem}
+.res-date{font-size:.75rem;color:var(--muted);margin-top:2px}
+
+/* CÓDIGO */
+.res-code{
+  color:var(--accent);font-size:.75rem;background:rgba(210,69,46,.08);
+  border:1px solid var(--accent-dk);border-radius:4px;padding:2px 7px;
+  font-family:monospace;letter-spacing:.05em;
+}
+
+/* PERSONAS BADGE */
+.party-badge{
+  display:inline-block;padding:4px 10px;border-radius:999px;
+  background:rgba(82,153,224,.1);border:1px solid rgba(82,153,224,.25);
+  color:var(--info);font-size:.78rem;font-weight:700;
+}
+
+/* STATUS BADGES */
+.status-badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em}
+.badge-confirmed{background:rgba(82,192,122,.15);color:var(--success);border:1px solid rgba(82,192,122,.25)}
+.badge-seated{background:rgba(82,153,224,.15);color:var(--info);border:1px solid rgba(82,153,224,.25)}
+.badge-cancelled{background:rgba(224,82,82,.15);color:var(--danger);border:1px solid rgba(224,82,82,.2)}
+.badge-noshow{background:rgba(138,133,128,.1);color:var(--muted);border:1px solid var(--border)}
+
+/* ACCIÓN BUTTONS */
+.act-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 12px;border-radius:6px;font-size:.76rem;font-weight:700;
+  border:1px solid;cursor:pointer;transition:all .18s;margin:2px 1px;
+  font-family:var(--font-body);white-space:nowrap;
+}
+.act-seat{background:rgba(82,192,122,.1);border-color:rgba(82,192,122,.4);color:var(--success)}
+.act-seat:hover{background:rgba(82,192,122,.22);border-color:var(--success)}
+.act-cancel{background:rgba(224,82,82,.08);border-color:rgba(224,82,82,.35);color:var(--danger)}
+.act-cancel:hover{background:rgba(224,82,82,.2);border-color:var(--danger)}
+.act-noshow{background:rgba(138,133,128,.08);border-color:var(--border);color:var(--muted)}
+.act-noshow:hover{background:rgba(138,133,128,.18);color:var(--text)}
+
+/* SEARCH BAR */
+.search-bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.search-bar input,.search-bar select{
+  background:var(--surface);border:1px solid var(--border);color:var(--text);
+  border-radius:var(--radius-sm);padding:10px 14px;font-size:.88rem;outline:none;cursor:pointer;
+}
+.search-bar input{flex:1;min-width:180px}
+
+/* CONFIG */
+.cfg-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:500px){.cfg-grid{grid-template-columns:1fr}}
+
+/* BLOCKED DATES */
+.blocked-list{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.blocked-chip{
+  display:inline-flex;align-items:center;gap:6px;padding:5px 10px;
+  background:rgba(224,82,82,.12);border:1px solid rgba(224,82,82,.3);
+  border-radius:6px;font-size:.78rem;color:var(--danger);
+}
+.blocked-chip button{background:none;border:none;color:var(--danger);cursor:pointer;font-size:.9rem;line-height:1;padding:0}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}
+.stat-num{font-size:2rem;font-weight:700;color:var(--accent);font-family:var(--font-display)}
+.stat-lbl{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:4px}
+.chart-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px;margin-bottom:16px}
+.chart-title{font-size:.8rem;color:var(--muted);margin-bottom:14px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+
+/* DAY TOGGLES */
+.day-toggle{
+  padding:8px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);
+  background:var(--surface);color:var(--muted);font-size:.82rem;cursor:pointer;
+  transition:all .2s;user-select:none;
+}
+.day-toggle.active{border-color:var(--danger);color:var(--danger);background:rgba(224,82,82,.1)}
+
+/* MANUAL FORM */
+.manual-form{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:18px}
+
+/* MISC */
+.divider{height:1px;background:var(--border);margin:20px 0}
+.text-muted{color:var(--muted);font-size:.82rem}
+.text-gold{color:var(--accent)}
+.mt-8{margin-top:8px}.mt-16{margin-top:16px}.mt-24{margin-top:24px}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE — MEJORADO
+═══════════════════════════════════════════════════ */
+
+/* ── Admin tabs: scroll horizontal en vez de comprimir ── */
+.admin-tabs{
+  overflow-x:auto;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+}
+.admin-tabs::-webkit-scrollbar{display:none}
+
+/* ── Telefono pequeno (< 400px) ── */
+@media(max-width:400px){
+  #header h1{font-size:1.4rem}
+  #header .meta{gap:6px;flex-direction:column;align-items:center}
+  #header .meta span{font-size:.7rem}
+  .card{padding:16px 12px}
+  .btn{padding:11px 14px;font-size:.84rem}
+  .booking-code{font-size:1.3rem;letter-spacing:.08em}
+  .cal-day{flex:0 0 52px;padding:7px 2px}
+  .cal-dd{font-size:1rem}
+  .cal-dn,.cal-dm{font-size:.6rem}
+  .prog-label{font-size:.58rem}
+  .slot{padding:6px 8px;font-size:.78rem;min-width:56px}
+  .confirm-row{flex-direction:column;gap:2px}
+  .confirm-row .val{text-align:left}
+  .setup-box{padding:18px 12px}
+  .today-stat .ts-num{font-size:1.4rem}
+  .today-stat .ts-lbl{font-size:.6rem}
+  .admin-topbar{padding:10px 12px}
+  .admin-topbar-left h2{font-size:.9rem}
+  .admin-topbar-right .btn{padding:6px 9px;font-size:.72rem}
+}
+
+/* ── Telefono (< 600px) ── */
+@media(max-width:600px){
+  #app{padding:14px 10px 80px}
+
+  /* Tabs: no comprimir, scroll lateral */
+  .admin-tabs{width:100%;justify-content:flex-start}
+  .a-tab{flex:0 0 auto;padding:8px 14px;font-size:.78rem;white-space:nowrap}
+
+  .admin-topbar{padding:11px 14px;gap:8px}
+  .admin-topbar-left h2{font-size:1rem}
+  .admin-topbar-right{gap:6px}
+  .admin-topbar-right .btn{padding:7px 11px;font-size:.76rem}
+  .admin-body{padding:14px 10px 60px}
+
+  /* Today bar: grid 2x2 limpio */
+  .today-bar{
+    display:grid!important;
+    grid-template-columns:1fr 1fr;
+    flex-wrap:unset;
+  }
+  .today-stat{
+    min-width:unset;flex:unset;
+    border-right:none!important;
+    border-bottom:1px solid var(--border);
+    padding:14px 8px;
+  }
+  .today-stat:nth-child(1){border-right:1px solid var(--border)!important}
+  .today-stat:nth-child(3){border-right:1px solid var(--border)!important;border-bottom:none}
+  .today-stat:nth-child(4){border-bottom:none}
+
+  /* Admin table: tarjetas en movil */
+  .res-table thead{display:none}
+  .res-table,.res-table tbody,.res-table tr,.res-table td{
+    display:block;width:100%;
+  }
+  .res-table tr{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius-sm);margin-bottom:10px;padding:12px 14px;
+  }
+  .res-table tr:hover td{background:transparent}
+  .res-table td{
+    padding:4px 0;border:none;font-size:.83rem;
+    display:flex;justify-content:space-between;align-items:center;min-height:28px;
+  }
+  .res-table td::before{
+    content:attr(data-label);
+    font-size:.68rem;color:var(--muted);text-transform:uppercase;
+    letter-spacing:.06em;font-weight:600;flex-shrink:0;min-width:68px;margin-right:8px;
+  }
+  .res-table td:last-child{
+    margin-top:8px;padding-top:10px;
+    border-top:1px solid var(--border);
+    flex-wrap:wrap;gap:6px;justify-content:flex-start;
+  }
+  .res-table td:last-child::before{display:none}
+
+  /* Search bar apilada */
+  .search-bar{flex-direction:column;gap:6px}
+  .search-bar input,.search-bar select{width:100%}
+
+  /* Tab nueva reserva: 1 columna */
+  #tab-nueva .cfg-grid{grid-template-columns:1fr}
+
+  /* Cal buttons en columna */
+  .cal-buttons{flex-direction:column;align-items:center}
+  .cal-btn{width:100%;max-width:280px;justify-content:center}
+
+  /* Btn row stack */
+  .btn-row-stack{flex-direction:column}
+  .btn-row-stack .btn{width:100%}
+
+  /* Setup overlay */
+  .setup-box{padding:22px 14px}
+  .setup-step{gap:8px}
+
+  /* Stats */
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .stat-num{font-size:1.6rem}
+
+  #admin-overlay{padding:0}
+}
+
+/* ── Tablet (600px - 900px) ── */
+@media(min-width:600px) and (max-width:900px){
+  #app{max-width:560px;margin:0 auto;padding:20px 20px 80px}
+  .card{padding:24px 20px}
+  .admin-body{padding:20px 20px 60px}
+
+  /* Tabs visibles sin scroll */
+  .admin-tabs{flex-wrap:wrap;width:auto}
+  .a-tab{flex:0 0 auto}
+
+  /* Today bar horizontal */
+  .today-bar{flex-wrap:nowrap;overflow-x:auto}
+  .today-stat{min-width:0;flex:1}
+
+  /* Search bar: input arriba, selects abajo */
+  .search-bar{flex-wrap:wrap}
+  .search-bar input{flex:1 1 100%;min-width:0}
+  .search-bar select{flex:1}
+
+  .cfg-grid{grid-template-columns:1fr 1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .cal-day{flex:0 0 68px}
+  .slot{padding:9px 14px}
+  .res-table th,.res-table td{padding:11px 12px;font-size:.84rem}
+}
+
+/* ── Desktop (> 900px) ── */
+@media(min-width:900px){
+  #app{max-width:640px;margin:0 auto}
+  .card{padding:28px}
+  .admin-body{padding:28px 32px 80px}
+  .cfg-grid{grid-template-columns:1fr 1fr}
+  .stats-grid{grid-template-columns:repeat(4,1fr)}
+  .res-table th,.res-table td{padding:13px 16px}
+
+  /* Search bar: todo en una fila */
+  .search-bar{flex-wrap:nowrap}
+  .search-bar input{flex:1}
+  .search-bar select{flex:0 0 auto;min-width:158px}
+}
+
+/* ── Desktop grande (> 1200px) ── */
+@media(min-width:1200px){
+  .admin-body{max-width:1200px;margin:0 auto;padding:32px 40px 80px}
+  .cfg-grid{grid-template-columns:1fr 1fr 1fr}
+}
+
+/* ── Touch: botones faciles de pulsar ── */
+@media(hover:none) and (pointer:coarse){
+  .btn{min-height:46px}
+  .slot{min-height:52px;min-width:72px}
+  .cal-day{min-height:72px}
+  .a-tab{min-height:42px}
+  .act-btn{min-height:38px;padding:8px 14px}
+  select,input{font-size:16px!important}
+}
+
+/* LOADING SCREEN */
+#loading-screen{
+  position:fixed;inset:0;background:var(--bg);z-index:9998;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+}
+.spinner{
+  width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--accent);
+  border-radius:50%;animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loading-screen p{color:var(--muted);font-size:.85rem}
+
+/* FIREBASE SETUP OVERLAY */
+#setup-overlay{
+  position:fixed;inset:0;background:rgba(31,29,26,.55);z-index:9997;
+  display:none;align-items:center;justify-content:center;padding:20px;overflow-y:auto;
+}
+#setup-overlay.show{display:flex}
+.setup-box{
+  max-width:520px;width:100%;background:var(--card);border:1px solid var(--accent-dk);
+  border-radius:var(--radius);padding:32px;
+}
+.setup-box h2{color:var(--accent);margin-bottom:8px;font-size:1.4rem}
+.setup-box .setup-sub{color:var(--muted);font-size:.85rem;margin-bottom:24px;line-height:1.6}
+.setup-step{
+  display:flex;gap:12px;margin-bottom:16px;align-items:flex-start;
+}
+.setup-num{
+  width:26px;height:26px;border-radius:50%;background:var(--accent-dk);color:var(--accent-lt);
+  font-size:.78rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
+}
+.setup-step-txt{font-size:.85rem;line-height:1.6;color:var(--text)}
+.setup-step-txt a{color:var(--accent)}
+.setup-step-txt code{
+  background:var(--surface);border:1px solid var(--border);border-radius:4px;
+  padding:1px 6px;font-size:.78rem;color:var(--accent-lt);
+}
+.setup-textarea{
+  width:100%;height:140px;background:var(--surface);border:1px solid var(--border);
+  color:var(--text);border-radius:var(--radius-sm);padding:12px;font-size:.8rem;
+  font-family:monospace;resize:vertical;outline:none;margin-top:4px;
+}
+.setup-textarea:focus{border-color:var(--accent)}
+.setup-error{color:var(--danger);font-size:.8rem;margin-top:6px;display:none}
+
+#print-area{display:none}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   OVERRIDES DEL SISTEMA DE RESERVAS
+═══════════════════════════════════════════════════════════════ */
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+body{font-family:var(--font-body);font-size:17px;line-height:1.6;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:clip}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.35;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .38 0 0 0 0 .28 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+h1,h2,h3{font-family:var(--font-display);font-weight:500;letter-spacing:-.015em;text-wrap:balance;font-variation-settings:"SOFT" 100,"WONK" 0}
+p{margin:0}
+::selection{background:var(--sun);color:var(--ink)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+#sync-status{display:none}
+#loading-screen{display:none!important}
+.card{box-shadow:none;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--card)}
+.card h2{color:var(--text);font-size:1.5rem}
+.card .sub{font-size:.92rem}
+.field label{font-size:.74rem;letter-spacing:.08em}
+.field input,.field select,.field textarea{background:#fff;border-radius:var(--radius-sm);border-color:var(--border)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--sky-deep);box-shadow:0 0 0 4px rgba(46,74,110,.12)}
+.btn{border-radius:999px}
+.btn-primary{color:#fff;box-shadow:0 3px 0 var(--ink);border:1.5px solid var(--ink)}
+.btn-primary:hover{transform:translateY(-1px)}
+.btn-ghost{color:var(--text);border-color:var(--border);background:#fff}
+.btn-danger{background:#fff}
+.slot,.cal-day{transition:transform .2s var(--ease),background-color .2s,border-color .2s}
+.slot:hover,.cal-day:hover{transform:translateY(-2px)}
+.slot.selected,.cal-day.selected{background:var(--sun-soft);border-color:var(--ink)}
+.slot.selected{color:var(--ink)}
+.slot.few{border-color:#D9A441;color:#9A6A0F}
+.a-tab.active{background:var(--accent-soft);color:var(--accent-lt)}
+.prog-step.done .prog-dot{background:var(--sage-soft);border-color:var(--sage);color:var(--sage-deep)}
+.res-time,.res-code{color:var(--accent-lt)}
+.booking-code{background:var(--sun-soft);color:var(--ink);border-color:var(--sun);font-family:var(--font-display)}
+#welcome-back{background:var(--sky-soft);border-color:#C3D4E8}
+#welcome-back .wb-text b{color:var(--sky-deep)}
+.success-icon{display:inline-grid;place-items:center;width:72px;height:72px;border-radius:50%;background:var(--sage-soft);color:var(--sage-deep);margin-bottom:14px;border:1.5px solid var(--ink)}
+.success-icon svg{width:34px;height:34px}
+#toast{box-shadow:0 12px 30px rgba(46,40,30,.2);opacity:0;visibility:hidden;transition:transform .3s,opacity .3s,visibility .3s}
+#toast.show{opacity:1;visibility:visible}
+.admin-topbar{background:#fff;border-bottom:2px solid var(--accent);box-shadow:0 6px 24px rgba(46,40,30,.08)}
+.admin-topbar-left h2{color:var(--text)}
+.setup-box{box-shadow:var(--shadow)}
+.setup-box h2{color:var(--text)}
+.manual-form h3,.card h3{color:var(--text)}
+#admin-panel,#admin-login,#setup-overlay{z-index:9000}
+@media print{body>:not(#print-area){display:none!important}#print-area{display:block!important}body::after{display:none}}
+
+/* ═══════════════════════════════════════════════════════════════
+   LANDING · base
+═══════════════════════════════════════════════════════════════ */
+.lp-wrap{max-width:1200px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.lp-section{padding-block:clamp(4.5rem,9vw,8rem);position:relative}
+.lp-hand{font-family:var(--font-hand);font-weight:600;line-height:1.05}
+.lp-eyebrow{display:inline-flex;align-items:center;gap:.6rem;font-size:.78rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+.lp-eyebrow::before{content:"";width:26px;height:2px;background:currentColor;border-radius:2px}
+.lp-h2{font-size:clamp(2.1rem,4.6vw,3.7rem);line-height:1.04}
+.lp-h2 em,.lp-title em{font-style:italic;font-weight:400;color:var(--accent);font-variation-settings:"SOFT" 100,"WONK" 1}
+.lp-sub{color:var(--muted);max-width:48ch;font-size:1.06rem}
+.lp-head{display:flex;flex-direction:column;gap:1rem;margin-bottom:2.8rem}
+
+.lp-btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  padding:.95rem 1.7rem;border-radius:999px;border:1.5px solid var(--ink);
+  font:500 1rem/1 var(--font-body);letter-spacing:.02em;text-decoration:none;cursor:pointer;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),background-color .25s,color .25s;
+  will-change:transform;
+}
+.lp-btn svg{width:18px;height:18px;transition:transform .3s var(--ease)}
+.lp-btn:hover svg{transform:translateX(4px)}
+.lp-btn-solid{background:var(--accent);color:#fff;box-shadow:0 4px 0 var(--ink)}
+.lp-btn-solid:hover{box-shadow:0 7px 0 var(--ink)}
+.lp-btn-solid:active{box-shadow:0 1px 0 var(--ink)}
+.lp-btn-line{background:var(--card);color:var(--ink);box-shadow:0 4px 0 var(--ink)}
+.lp-btn-line:hover{background:var(--sun-soft);box-shadow:0 7px 0 var(--ink)}
+.lp-btn>span{position:relative;z-index:1}
+
+/* barra de progreso */
+.lp-progress{position:fixed;left:0;top:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--sage),var(--sun),var(--accent));z-index:80}
+
+/* NAV */
+.lp-nav{position:sticky;top:0;z-index:60;background:rgba(251,246,236,.78);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border-bottom:1.5px solid transparent;transition:transform .45s var(--ease),border-color .3s,background-color .3s;padding-top:env(safe-area-inset-top,0px)}
+.lp-nav.is-scrolled{background:rgba(251,246,236,.94);border-color:var(--border)}
+.lp-nav.is-hidden{transform:translateY(-100%)}
+.lp-nav-in{display:flex;align-items:center;justify-content:space-between;gap:1.2rem;min-height:76px}
+.lp-brand{display:flex;align-items:center;gap:.75rem;text-decoration:none;color:var(--ink);min-width:0}
+.lp-mark{width:48px;height:48px;flex:none;display:block;border-radius:50%;overflow:hidden;background:#fff;border:1.5px solid var(--ink);transition:transform .5s var(--ease)}
+.lp-brand:hover .lp-mark{transform:rotate(-12deg) scale(1.06)}
+.lp-mark img{width:100%;height:100%;display:block;object-fit:contain;transform:scale(1.5);transform-origin:50% 42%}
+.lp-brand-txt{display:flex;flex-direction:column;line-height:1.05;min-width:0}
+.lp-brand-txt b{font-family:var(--font-display);font-weight:600;font-size:1.35rem;letter-spacing:-.02em;user-select:none;font-style:italic}
+.lp-brand-txt small{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.3rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lp-links{display:flex;gap:.4rem;padding:.35rem;border-radius:999px;border:1.5px solid var(--border);background:rgba(255,253,248,.7)}
+.lp-links a{position:relative;text-decoration:none;font-size:.93rem;color:var(--muted);padding:.5rem 1rem;border-radius:999px;transition:color .25s,background-color .25s}
+.lp-links a:hover{color:var(--ink)}
+.lp-links a[aria-current="true"]{background:var(--ink);color:var(--bg)}
+.lp-nav-end{display:flex;align-items:center;gap:.6rem}
+.lp-nav-cta{padding:.75rem 1.3rem;font-size:.92rem}
+.lp-burger{display:none;width:46px;height:46px;border-radius:50%;border:1.5px solid var(--ink);background:var(--card);cursor:pointer;position:relative}
+.lp-burger i{position:absolute;left:13px;right:13px;height:2px;background:var(--ink);border-radius:2px;transition:transform .35s var(--ease),top .35s var(--ease)}
+.lp-burger i:first-child{top:18px}.lp-burger i:last-child{top:25px}
+.lp-burger[aria-expanded="true"] i:first-child{top:21.5px;transform:rotate(45deg)}
+.lp-burger[aria-expanded="true"] i:last-child{top:21.5px;transform:rotate(-45deg)}
+.lp-sheet{border-top:1.5px solid var(--border);background:var(--bg)}
+.lp-sheet nav{display:flex;flex-direction:column;padding-block:1rem 1.6rem}
+.lp-sheet a{font-family:var(--font-display);font-size:1.9rem;color:var(--ink);text-decoration:none;padding:.45rem 0;border-bottom:1px dashed var(--border)}
+.lp-sheet p{margin-top:1rem;font-size:1.4rem;color:var(--muted)}
+.lp-sheet p a{font-family:inherit;font-size:inherit;border:0;color:var(--accent)}
+.lp-sheet:not([hidden]) a{animation:lp-rise .5s var(--ease) both}
+.lp-sheet a:nth-child(2){animation-delay:.04s}.lp-sheet a:nth-child(3){animation-delay:.08s}.lp-sheet a:nth-child(4){animation-delay:.12s}.lp-sheet a:nth-child(5){animation-delay:.16s}
+
+/* HERO */
+@keyframes lp-rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes lp-word{from{opacity:0;transform:translateY(.55em) rotate(4deg)}to{opacity:1;transform:none}}
+@keyframes lp-draw{to{stroke-dashoffset:0}}
+@keyframes lp-spin{to{transform:rotate(360deg)}}
+@keyframes lp-float{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-12px) rotate(calc(var(--r,0deg) + 6deg))}}
+@keyframes lp-steam{0%{stroke-dashoffset:120;opacity:0}30%{opacity:1}100%{stroke-dashoffset:-120;opacity:0}}
+@keyframes lp-pop{0%{opacity:0;transform:scale(.6) rotate(-10deg)}70%{transform:scale(1.06) rotate(2deg)}100%{opacity:1;transform:none}}
+.lp-hero{position:relative;overflow:hidden;padding-bottom:clamp(3rem,5vw,4rem)}
+.lp-hero::before{content:"";position:absolute;width:780px;height:780px;right:-220px;top:-260px;border-radius:50%;background:radial-gradient(circle,rgba(157,184,214,.45),rgba(157,184,214,0) 68%);pointer-events:none}
+.lp-hero::after{content:"";position:absolute;width:560px;height:560px;left:-260px;bottom:-280px;border-radius:50%;background:radial-gradient(circle,rgba(242,193,78,.28),rgba(242,193,78,0) 68%);pointer-events:none}
+.lp-hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.08fr .92fr;gap:2rem;align-items:center;padding-block:clamp(2.5rem,6vw,5rem) 1rem}
+.lp-hero-copy{display:flex;flex-direction:column;align-items:flex-start;gap:1.45rem}
+.lp-hello{font-size:1.85rem;color:var(--sky-deep);transform:rotate(-2deg);animation:lp-rise .8s var(--ease) both}
+.lp-title{font-size:clamp(3rem,7.2vw,6.4rem);line-height:.98;letter-spacing:-.035em;font-weight:400;font-variation-settings:"SOFT" 100,"WONK" 0,"opsz" 144}
+.lp-title .w{display:inline-block;animation:lp-word .9s var(--ease) both;animation-delay:calc(.12s + var(--i) * .07s)}
+.lp-under{position:relative;display:inline-block}
+.lp-under svg{position:absolute;left:-2%;right:-2%;bottom:-.12em;width:104%;height:.32em;overflow:visible}
+.lp-under path{fill:none;stroke:var(--sun);stroke-width:7;stroke-linecap:round;stroke-dasharray:320;stroke-dashoffset:320;animation:lp-draw 1s .9s var(--ease) forwards}
+.lp-under em{position:relative;z-index:1}
+.lp-lead{font-size:1.2rem;color:var(--muted);max-width:38ch;animation:lp-rise .8s .55s var(--ease) both}
+.lp-hero .lp-cta-row{animation:lp-rise .8s .65s var(--ease) both}
+.lp-cta-row{display:flex;flex-wrap:wrap;gap:.9rem}
+.lp-open{display:inline-flex;align-items:center;gap:.6rem;padding:.5rem 1rem;border-radius:999px;background:var(--card);border:1.5px dashed var(--border);font-size:.92rem;color:var(--muted);animation:lp-rise .8s .75s var(--ease) both}
+.lp-open i{width:.6rem;height:.6rem;border-radius:50%;background:#B7B0A3;flex:none}
+.lp-open.is-open i{background:#3FAE6A;box-shadow:0 0 0 0 rgba(63,174,106,.45);animation:lp-ping 2s infinite}
+.lp-open.is-open{color:var(--sage-deep);border-color:#BFD5B0;border-style:solid}
+@keyframes lp-ping{0%{box-shadow:0 0 0 0 rgba(63,174,106,.45)}80%,100%{box-shadow:0 0 0 10px rgba(63,174,106,0)}}
+
+.lp-hero-art{position:relative;display:grid;place-items:center;min-width:0}
+.lp-stage{position:relative;width:min(100%,540px);aspect-ratio:1/1;animation:lp-pop 1.1s .25s var(--ease) both}
+.lp-par{position:absolute;inset:0;transition:transform .6s var(--ease);will-change:transform}
+.lp-cloth-wrap{display:grid;place-items:center}
+.lp-cloth{width:70%;height:70%;border-radius:28px;background:var(--gingham);border:1.5px solid var(--ink);transform:rotate(-9deg) translate(6%,6%);box-shadow:10px 12px 0 rgba(31,29,26,.08)}
+.lp-ring-wrap{display:grid;place-items:center}
+.lp-ringtext{width:100%;height:100%;overflow:visible;rotate:var(--ring,0deg)}
+.lp-ringtext text{font:600 15px var(--font-body);letter-spacing:.32em;fill:var(--ink)}
+.lp-ringtext{animation:lp-spin 60s linear infinite}
+.lp-ring-wrap{transform-origin:50% 50%}
+.lp-logo-wrap{display:grid;place-items:center}
+.lp-logo{width:70%;aspect-ratio:1/1;border-radius:50%;background:#fff;border:1.5px solid var(--ink);box-shadow:0 30px 60px -28px rgba(46,40,30,.45),inset 0 0 0 10px #fff,inset 0 0 0 11.5px var(--sky-soft);display:grid;place-items:center;overflow:hidden;transition:transform .7s var(--ease)}
+.lp-stage:hover .lp-logo{transform:rotate(-6deg) scale(1.03)}
+.lp-logo img{width:94%;height:94%;object-fit:contain;display:block}
+.lp-doodle{inset:auto}
+.lp-doodle svg{display:block;width:100%;height:auto;animation:lp-float 6s ease-in-out infinite}
+.dd-basil{width:22%;left:-4%;top:58%}.dd-basil svg{--r:-12deg;animation-duration:7s}
+.dd-tomato{width:17%;right:0;top:4%}.dd-tomato svg{--r:8deg;animation-delay:-2s}
+.dd-steam{width:12%;left:44%;top:-8%}.dd-steam svg{animation:none}
+.dd-steam .st{stroke-dasharray:120;animation:lp-steam 3.2s ease-in-out infinite}
+.dd-steam .s2{animation-delay:.6s}.dd-steam .s3{animation-delay:1.2s}
+.dd-star{width:8%;right:10%;bottom:12%}.dd-star svg{animation-duration:4.5s;animation-delay:-1s}
+.lp-note-wrap{inset:auto;left:-6%;top:6%;display:flex;flex-direction:column;align-items:flex-start}
+.lp-note{font-size:1.9rem;color:var(--accent);transform:rotate(-8deg)}
+.lp-note-arrow{width:84px;margin:-.2rem 0 0 3.4rem}
+.lp-note-arrow path{stroke-dasharray:140;stroke-dashoffset:140;animation:lp-draw 1s 1.4s var(--ease) forwards}
+.lp-scroll-cue{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:.2rem;margin:0 auto;width:max-content;color:var(--muted);text-decoration:none;font-size:1.35rem}
+.lp-scroll-cue svg{width:18px;height:28px;animation:lp-bob 1.8s ease-in-out infinite}
+@keyframes lp-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* MARQUEE */
+.lp-mq-clip{position:relative;z-index:2;overflow:hidden;padding-block:28px;margin-block:-28px}
+.lp-marquee{position:relative;overflow:hidden;background:var(--ink);color:var(--bg);border-block:1.5px solid var(--ink);transform:rotate(-1.4deg);margin:0 -2vw;padding:1.05rem 0}
+.lp-mq-track{display:flex;width:max-content;animation:lp-mq 38s linear infinite}
+.lp-mq-track span{display:inline-flex;align-items:center;gap:1.6rem;padding-right:1.6rem;font-family:var(--font-display);font-style:italic;font-size:clamp(1.5rem,3vw,2.3rem);white-space:nowrap;letter-spacing:-.01em}
+.lp-mq-track svg{width:22px;height:22px;flex:none}
+@keyframes lp-mq{to{transform:translateX(-50%)}}
+
+/* LA CASA */
+.lp-casa-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,5.5rem);align-items:center}
+.lp-casa-grid>*{min-width:0}
+.lp-casa .lp-head{margin-bottom:0}
+.lp-stats{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem 1.6rem;margin-top:1.4rem}
+.lp-stat{border-top:1.5px solid var(--ink);padding-top:.9rem}
+.lp-stat b{display:block;font-family:var(--font-display);font-weight:400;font-size:clamp(2.6rem,5vw,3.6rem);line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--ink)}
+.lp-stat:nth-child(1) b{color:var(--accent)}
+.lp-stat span{color:var(--muted);font-size:.95rem}
+.lp-notes{display:grid;grid-template-columns:1fr 1fr;gap:1.3rem;padding:1rem .4rem}
+.lp-card{position:relative;padding:1.9rem 1.5rem 1.6rem;border-radius:6px 6px 22px 6px;border:1.5px solid var(--ink);background:var(--card);display:flex;flex-direction:column;gap:.65rem;box-shadow:6px 7px 0 var(--ink);transform:rotate(var(--rot,0deg));transition:transform .5s var(--ease),box-shadow .5s var(--ease);transform-style:preserve-3d}
+.lp-card::before{content:"";position:absolute;top:-13px;left:50%;width:78px;height:24px;transform:translateX(-50%) rotate(-3deg);background:rgba(242,193,78,.55);border:1px solid rgba(31,29,26,.08)}
+.lp-card svg{width:46px;height:46px;color:var(--ink)}
+.lp-card h3{font-size:1.32rem;line-height:1.15}
+.lp-card p{font-size:.95rem;color:var(--muted)}
+.lp-card.c1{--rot:-2.5deg;background:#FFF8F4}
+.lp-card.c2{--rot:2deg;margin-top:2.2rem;background:#FFFBEE}
+.lp-card.c3{--rot:1.5deg;margin-top:-1.4rem;background:#F6F9FD}
+.lp-card.c4{--rot:-2deg;margin-top:.8rem;background:#F8FAF3}
+.lp-card.c2::before{background:rgba(157,184,214,.6)}
+.lp-card.c3::before{background:rgba(210,69,46,.35)}
+.lp-card.c4::before{background:rgba(91,127,74,.35)}
+.lp-card:hover{box-shadow:10px 12px 0 var(--ink)}
+
+/* RULETA */
+.lp-ruleta{background:var(--sky-soft);border-block:1.5px solid var(--ink);overflow:hidden}
+.lp-ruleta::before{content:"";position:absolute;inset:0 0 auto;height:18px;background:var(--gingham);border-bottom:1.5px solid var(--ink)}
+.lp-ruleta-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,5rem);align-items:center}
+.lp-ruleta-grid>*{min-width:0}
+.lp-ruleta .lp-head{margin-bottom:0}
+.lp-ruleta .lp-h2 em{color:var(--sky-deep)}
+.lp-pick{min-height:140px;margin-top:.4rem}
+.lp-pick-empty{font-size:1.6rem;color:var(--muted);transform:rotate(-2deg);padding-top:1rem}
+.lp-pick-card{display:grid;gap:.4rem;padding:1.3rem 1.4rem;background:var(--card);border:1.5px solid var(--ink);border-radius:18px;box-shadow:6px 7px 0 var(--ink);max-width:30rem;animation:lp-pop .6s var(--ease) both}
+.lp-pick-card small{font-family:var(--font-hand);font-size:1.35rem;color:var(--accent);line-height:1}
+.lp-pick-card h3{font-size:1.9rem;line-height:1.05}
+.lp-pick-card p{color:var(--muted)}
+.lp-pick-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.8rem;margin-top:.5rem}
+.lp-pick-price{font-family:var(--font-display);font-size:1.5rem}
+.lp-pick-row a{color:var(--ink);font-weight:500;text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:.1rem}
+.lp-wheel-zone{display:grid;place-items:center}
+.lp-wheel-box{position:relative;width:min(100%,470px);aspect-ratio:1/1}
+.lp-wheel{width:100%;height:100%;display:block;filter:drop-shadow(8px 10px 0 rgba(31,29,26,.9));transition:transform 4.2s cubic-bezier(.12,.75,.12,1)}
+.lp-wheel text{font:600 13.5px var(--font-body);letter-spacing:.04em;fill:var(--ink);text-transform:uppercase}
+.lp-pointer{position:absolute;top:-6%;left:50%;width:13%;transform:translateX(-50%);z-index:3;filter:drop-shadow(0 4px 0 rgba(31,29,26,.25));transform-origin:50% 30%}
+.lp-pointer.tick{animation:lp-tick .14s ease}
+@keyframes lp-tick{50%{transform:translateX(-50%) rotate(-12deg)}}
+.lp-hub{position:absolute;left:50%;top:50%;width:26%;aspect-ratio:1/1;transform:translate(-50%,-50%);border-radius:50%;border:2px solid var(--ink);background:var(--card);cursor:pointer;z-index:2;display:grid;place-items:center;box-shadow:0 4px 0 var(--ink);transition:transform .25s var(--ease),box-shadow .25s}
+.lp-hub span{font-size:clamp(1.4rem,3vw,2rem);color:var(--accent)}
+.lp-hub:hover{transform:translate(-50%,-52%) rotate(-6deg);box-shadow:0 7px 0 var(--ink)}
+.lp-hub:disabled{cursor:progress}
+
+/* CARTA */
+.lp-carta{background:var(--bg)}
+.lp-menu-sheet{position:relative;background:var(--card);border:1.5px solid var(--ink);border-radius:28px;padding:clamp(1.6rem,4.5vw,3.6rem);box-shadow:10px 12px 0 var(--ink)}
+.lp-menu-sheet::before{content:"";position:absolute;left:clamp(1rem,3vw,2rem);right:clamp(1rem,3vw,2rem);top:12px;height:10px;border-radius:10px;background:var(--gingham);opacity:.9}
+.lp-menu-top{display:flex;justify-content:space-between;align-items:flex-start;gap:2rem}
+.lp-menu-top .lp-head{margin-bottom:2rem}
+.lp-menu-note{font-size:1.75rem;color:var(--sky-deep);transform:rotate(6deg);text-align:right;flex:none;margin-top:.6rem}
+.lp-carta-tools{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between;margin-bottom:2.4rem;padding-bottom:1.6rem;border-bottom:1.5px dashed var(--border)}
+.lp-tabs{display:flex;flex-wrap:wrap;gap:.5rem}
+.lp-tabs button{font:500 .95rem var(--font-body);padding:.62rem 1.15rem;border-radius:999px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;transition:background-color .25s,color .25s,transform .25s var(--ease),box-shadow .25s}
+.lp-tabs button:hover{transform:translateY(-2px);box-shadow:0 3px 0 var(--ink)}
+.lp-tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+.lp-tabs.is-dim{opacity:.4}
+.lp-search{position:relative;flex:0 1 300px;min-width:0}
+.lp-search input{width:100%;font:inherit;font-size:.95rem;padding:.75rem 1rem .75rem 2.6rem;border-radius:999px;border:1.5px solid var(--ink);background:var(--bg);color:var(--text);outline:none;transition:box-shadow .2s}
+.lp-search input:focus{box-shadow:0 0 0 4px rgba(242,193,78,.45)}
+.lp-search svg{position:absolute;left:1rem;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--muted)}
+.lp-dishes{display:grid;grid-template-columns:1fr 1fr;gap:1.7rem 4rem}
+@keyframes lp-fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.lp-dishes.swap .lp-dish{animation:lp-fade .45s var(--ease) both}
+.lp-dishes.swap .lp-dish:nth-child(2){animation-delay:.03s}.lp-dishes.swap .lp-dish:nth-child(3){animation-delay:.06s}
+.lp-dishes.swap .lp-dish:nth-child(4){animation-delay:.09s}.lp-dishes.swap .lp-dish:nth-child(5){animation-delay:.12s}
+.lp-dishes.swap .lp-dish:nth-child(6){animation-delay:.15s}.lp-dishes.swap .lp-dish:nth-child(n+7){animation-delay:.18s}
+.lp-dish{min-width:0}
+.lp-dish-head{display:flex;align-items:baseline;gap:.6rem}
+.lp-dish h3{font-size:1.25rem;line-height:1.25;background:linear-gradient(transparent 60%,rgba(242,193,78,.55) 60%) 0 0/0% 100% no-repeat;transition:background-size .45s var(--ease)}
+.lp-dish:hover h3{background-size:100% 100%}
+.lp-dots{flex:1;min-width:1rem;border-bottom:2px dotted #C9BEA8;transform:translateY(-.25rem)}
+.lp-price{font-family:var(--font-display);font-size:1.15rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.lp-dish p{color:var(--muted);font-size:.95rem;margin-top:.2rem}
+.lp-chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.5rem}
+.lp-chips span{font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;padding:.18rem .6rem;border-radius:999px;background:var(--sage-soft);color:var(--sage-deep);border:1px solid rgba(52,80,42,.2)}
+.lp-chips span.hot{background:var(--accent-soft);color:var(--accent-lt);border-color:rgba(181,54,31,.2)}
+.lp-chips span.sun{background:var(--sun-soft);color:#7A5806;border-color:rgba(122,88,6,.2)}
+.lp-chips span.sky{background:var(--sky-soft);color:var(--sky-deep);border-color:rgba(46,74,110,.2)}
+.lp-cat-tag{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.15rem;display:block}
+.lp-empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:2.5rem 0}
+.lp-note-small{margin-top:2.6rem;color:var(--muted);font-size:.88rem}
+.lp-note-small a{color:var(--ink);border-bottom:1.5px solid var(--accent);text-decoration:none}
+
+/* RESERVAR */
+.lp-book{background:var(--bg-alt);border-top:1.5px solid var(--ink)}
+.lp-book-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(2rem,6vw,5rem);align-items:start}
+.lp-book-grid>*{min-width:0}
+.lp-book-intro{display:flex;flex-direction:column;gap:1.2rem;position:sticky;top:110px}
+.lp-facts{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:1rem}
+.lp-facts li{display:grid;grid-template-columns:auto 1fr;gap:.9rem;align-items:start;padding-top:1rem;border-top:1.5px dashed var(--border)}
+.lp-facts svg{width:24px;height:24px;color:var(--accent);margin-top:.15rem}
+.lp-facts b{display:block;font-weight:500}
+.lp-facts span{color:var(--muted);font-size:.95rem}
+.lp-facts a{color:var(--ink);border-bottom:1.5px solid var(--accent);text-decoration:none}
+.lp-book-hand{font-size:1.8rem;color:var(--sky-deep);align-self:flex-end;transform:rotate(-4deg)}
+.lp-book-panel{position:relative;background:var(--card);border:1.5px solid var(--ink);border-radius:26px;padding:clamp(1rem,2.6vw,1.7rem);padding-top:clamp(2.2rem,4vw,2.8rem);box-shadow:10px 12px 0 var(--ink)}
+.lp-book-panel::before{content:"";position:absolute;left:0;right:0;top:0;height:16px;border-radius:24px 24px 0 0;background:var(--gingham);border-bottom:1.5px solid var(--ink)}
+#reservar #app{max-width:none;margin:0;padding:0}
+#reservar #progress-wrap{background:transparent;border:0;padding:.4rem .4rem 1.3rem}
+#reservar .prog-step:not(:last-child)::after{background:var(--border)}
+#reservar .prog-label{font-size:.7rem}
+#reservar .prog-step.active .prog-dot{box-shadow:0 0 0 4px var(--accent-soft)}
+#reservar .card{background:var(--bg);border-style:dashed}
+#reservar .card:last-child{margin-bottom:0}
+
+/* VISITA */
+.lp-visit{background:var(--bg)}
+.lp-postcard{position:relative;background:var(--card);border:1.5px solid var(--ink);border-radius:10px;padding:clamp(2.2rem,5vw,4rem) clamp(1.4rem,5vw,3.8rem);box-shadow:10px 12px 0 var(--ink);overflow:hidden}
+.lp-postcard::before,.lp-postcard::after{content:"";position:absolute;left:0;right:0;height:10px;background:repeating-linear-gradient(-45deg,var(--accent) 0 14px,var(--card) 14px 24px,var(--sky) 24px 38px,var(--card) 38px 48px)}
+.lp-postcard::before{top:0}.lp-postcard::after{bottom:0}
+.lp-stamp{position:absolute;right:clamp(1.2rem,4vw,3rem);top:clamp(1.8rem,4vw,2.8rem);width:clamp(84px,11vw,124px);aspect-ratio:4/5;padding:9px;transform:rotate(6deg);filter:drop-shadow(3px 4px 0 rgba(31,29,26,.16));transition:transform .5s var(--ease);
+  background:radial-gradient(circle at 5px 5px,transparent 3.6px,#fff 4.2px) -5px -5px/10px 10px}
+.lp-stamp:hover{transform:rotate(-2deg) scale(1.05)}
+.lp-stamp img{width:100%;height:100%;object-fit:cover;display:block;background:var(--sky-soft)}
+.lp-post-head{max-width:calc(100% - 140px);display:flex;flex-direction:column;gap:1rem;margin-bottom:2.6rem}
+.lp-visit-grid{display:grid;grid-template-columns:1fr 1fr 1.1fr;gap:clamp(1.6rem,4vw,3.5rem)}
+.lp-visit-grid>*{min-width:0}
+.lp-visit-grid>*+*{border-left:1.5px dashed var(--border);padding-left:clamp(1.2rem,3vw,2.6rem)}
+.lp-visit h3{font-size:1.35rem;margin-bottom:.9rem}
+.lp-visit p,.lp-visit li{color:var(--muted)}
+.lp-visit-actions{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+.lp-chip-btn{display:inline-flex;align-items:center;font:500 .88rem var(--font-body);padding:.55rem 1rem;border-radius:999px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);text-decoration:none;cursor:pointer;transition:transform .25s var(--ease),box-shadow .25s,background-color .25s}
+.lp-chip-btn:hover{transform:translateY(-2px);box-shadow:0 3px 0 var(--ink);background:var(--sun-soft)}
+.lp-hours{list-style:none;margin:0;padding:0;display:grid;gap:.45rem;font-size:.95rem}
+.lp-hours li{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.25rem .5rem;margin-inline:-.5rem;border-radius:8px}
+.lp-hours li span:last-child{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:0 .7rem;text-align:right}
+.lp-hours li span:last-child i{font-style:normal;white-space:nowrap;font-variant-numeric:tabular-nums}
+.lp-hours li.today{color:var(--ink);background:var(--sun-soft)}
+.lp-hours li.today span:first-child{font-weight:600}
+.lp-hours li.closed span:last-child{color:#A79E90}
+.lp-contact{list-style:none;margin:0;padding:0;display:grid;gap:.75rem}
+.lp-contact li{display:grid;gap:.05rem}
+.lp-contact span{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
+.lp-contact a{color:var(--ink);text-decoration:none;border-bottom:1.5px solid var(--sky);justify-self:start;overflow-wrap:anywhere;transition:border-color .2s}
+.lp-contact a:hover{border-color:var(--accent)}
+
+/* FAQ */
+.lp-faq-sec{background:var(--bg);padding-top:0}
+.lp-faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(2rem,6vw,5rem);align-items:start}
+.lp-faq-grid>*{min-width:0}
+.lp-faq-hand{font-size:1.7rem;color:var(--accent);transform:rotate(-4deg);margin-top:.5rem}
+.lp-faq details{border-top:1.5px solid var(--ink);padding:1.25rem 0}
+.lp-faq details:last-child{border-bottom:1.5px solid var(--ink)}
+.lp-faq summary{cursor:pointer;font-family:var(--font-display);font-size:1.3rem;list-style:none;display:flex;justify-content:space-between;gap:1rem;align-items:center;transition:color .2s}
+.lp-faq summary:hover{color:var(--accent)}
+.lp-faq summary::-webkit-details-marker{display:none}
+.lp-faq summary::after{content:"+";display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--ink);font-family:var(--font-body);font-size:1.3rem;line-height:1;color:var(--ink);transition:transform .35s var(--ease),background-color .25s;flex:none}
+.lp-faq details[open] summary::after{transform:rotate(135deg);background:var(--sun)}
+.lp-faq details p{color:var(--muted);margin-top:.8rem;max-width:58ch}
+.lp-faq details[open] p{animation:lp-fade .4s var(--ease) both}
+
+/* FOOTER */
+.lp-footer{position:relative;background:var(--ink);color:var(--bg);padding-block:0 2.4rem;overflow:hidden}
+.lp-footer-cloth{height:26px;background:var(--gingham);border-block:1.5px solid var(--ink)}
+.lp-grazie{font-family:var(--font-display);font-weight:400;font-size:clamp(3.6rem,13vw,11rem);line-height:.95;letter-spacing:-.045em;margin-top:clamp(2.5rem,6vw,4.5rem)}
+.lp-grazie em{color:var(--sun);font-variation-settings:"SOFT" 100,"WONK" 1}
+.lp-footer-hand{font-size:clamp(1.6rem,3vw,2.2rem);color:var(--sky);transform:rotate(-3deg);margin:.6rem 0 0 clamp(.5rem,8vw,7rem)}
+.lp-footer-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem 2rem;margin-top:clamp(2.4rem,5vw,3.6rem);padding-top:1.4rem;border-top:1px solid rgba(251,246,236,.18);font-size:.9rem;color:rgba(251,246,236,.7)}
+.lp-footer a{color:var(--bg);text-decoration:none;border-bottom:1px solid rgba(251,246,236,.35)}
+.lp-footer a:hover{border-color:var(--sun)}
+
+/* FAB (móvil) */
+.lp-fab{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:55;opacity:0;transform:translateY(20px) scale(.9);pointer-events:none;transition:opacity .35s,transform .45s var(--ease)}
+.lp-fab.show{opacity:1;transform:none;pointer-events:auto}
+
+/* CONFETI */
+.lp-confetti{position:fixed;inset:0;pointer-events:none;z-index:9500;overflow:hidden}
+.lp-confetti i{position:absolute;top:-30px;width:14px;height:14px;display:block;animation:lp-fall var(--d,2.6s) cubic-bezier(.2,.6,.4,1) forwards}
+@keyframes lp-fall{to{transform:translate(var(--x,0),110vh) rotate(var(--rr,540deg))}}
+
+/* REVEAL */
+.js [data-reveal]{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.js [data-reveal].in{opacity:1;transform:none}
+.js .lp-card[data-reveal]{transform:translateY(40px) rotate(calc(var(--rot,0deg) * 3))}
+.js .lp-card[data-reveal].in{transform:rotate(var(--rot,0deg))}
+.js .lp-card[data-reveal].in.tilting{transition:transform .15s linear,box-shadow .5s var(--ease)}
+.js .lp-stat[data-reveal]:nth-child(2){transition-delay:.08s}.js .lp-stat[data-reveal]:nth-child(3){transition-delay:.16s}.js .lp-stat[data-reveal]:nth-child(4){transition-delay:.24s}
+.js .lp-card.c2[data-reveal]{transition-delay:.1s}.js .lp-card.c3[data-reveal]{transition-delay:.2s}.js .lp-card.c4[data-reveal]{transition-delay:.3s}
+
+/* RESPONSIVE */
+@media (max-width:1020px){
+  .lp-links{display:none}
+  .lp-burger{display:block}
+  .lp-hero-grid{grid-template-columns:1fr;text-align:left}
+  .lp-hero-art{order:-1}
+  .lp-stage{width:min(86%,420px)}
+  .lp-casa-grid,.lp-ruleta-grid,.lp-book-grid,.lp-faq-grid{grid-template-columns:1fr}
+  .lp-book-intro{position:static}
+  .lp-visit-grid{grid-template-columns:1fr 1fr}
+  .lp-visit-grid>*:nth-child(3){grid-column:1/-1;border-left:0;padding-left:0;border-top:1.5px dashed var(--border);padding-top:1.6rem}
+  .lp-dishes{grid-template-columns:1fr}
+  .lp-book-hand{display:none}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .lp-nav-in{min-height:66px}
+  .lp-nav-cta{display:none}
+  .lp-brand-txt small{display:none}
+  .lp-title{font-size:clamp(2.7rem,12.5vw,3.6rem)}
+  .lp-lead{font-size:1.08rem}
+  .lp-cta-row .lp-btn{flex:1 1 auto}
+  .lp-note{font-size:1.5rem}
+  .lp-note-wrap{left:-2%;top:0}
+  .lp-notes{grid-template-columns:1fr;gap:1.6rem}
+  .lp-card.c2,.lp-card.c3,.lp-card.c4{margin-top:0}
+  .lp-menu-top{flex-direction:column;gap:0}
+  .lp-menu-note{display:none}
+  .lp-search{flex-basis:100%}
+  .lp-tabs{flex-wrap:nowrap;overflow-x:auto;margin-inline:-.4rem;padding:.2rem .4rem .5rem;scrollbar-width:none}
+  .lp-tabs::-webkit-scrollbar{display:none}
+  .lp-tabs button{flex:none}
+  .lp-menu-sheet,.lp-book-panel,.lp-postcard{box-shadow:6px 7px 0 var(--ink)}
+  .lp-post-head{max-width:calc(100% - 80px)}
+  .lp-stamp{width:72px}
+  .lp-visit-grid{grid-template-columns:1fr}
+  .lp-visit-grid>*+*{border-left:0;padding-left:0;border-top:1.5px dashed var(--border);padding-top:1.6rem}
+  .lp-visit-grid>*:nth-child(3){grid-column:auto}
+  .lp-book-panel{padding-inline:.6rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .lp-under path,.lp-note-arrow path{stroke-dashoffset:0}
+  .js [data-reveal]{opacity:1;transform:none}
+}
+
+</style>
+</head>
+<body>
+<!-- LOADING -->
+<div id="loading-screen">
+  <div class="spinner"></div>
+  <p>Conectando con la base de datos...</p>
+</div>
+
+
+<!-- SYNC STATUS -->
+<div id="sync-status">
+  <div class="sync-dot" id="sync-dot"></div>
+  <span id="sync-label">Iniciando...</span>
+</div>
+
+
+<!-- FIREBASE SETUP -->
+<div id="setup-overlay">
+  <div class="setup-box">
+    <h2>Configurar base de datos</h2>
+    <p class="setup-sub">Conecta Firebase para sincronizar reservas en tiempo real entre todos los dispositivos del restaurante. Solo se hace una vez.</p>
+
+    <div class="setup-step">
+      <div class="setup-num">1</div>
+      <div class="setup-step-txt">
+        Ve a <a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a> → <b>Crear proyecto</b> → dale un nombre (ej: <code>mi-restaurante</code>) → continuar hasta el final.
+      </div>
+    </div>
+    <div class="setup-step">
+      <div class="setup-num">2</div>
+      <div class="setup-step-txt">
+        Dentro del proyecto, ve al menú lateral → <b>Firestore Database</b> → <b>Crear base de datos</b> → elige <b>Modo de prueba</b> → selecciona la región más cercana → listo.
+      </div>
+    </div>
+    <div class="setup-step">
+      <div class="setup-num">3</div>
+      <div class="setup-step-txt">
+        Ve a <b>Configuración del proyecto</b> (icono ) → sección <b>Tus apps</b> → haz clic en <b>&lt;/&gt;</b> (Web) → registra la app → copia el objeto <code>firebaseConfig</code> que aparece → pégalo aquí abajo:
+      </div>
+    </div>
+
+    <div class="field" style="margin-bottom:8px">
+      <label>Pega aquí el objeto firebaseConfig</label>
+      <textarea class="setup-textarea" id="setup-config-input" placeholder='const firebaseConfig = {
+  apiKey: "AIzaSy...",
+  authDomain: "mi-proyecto.firebaseapp.com",
+  projectId: "mi-proyecto",
+  storageBucket: "mi-proyecto.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "1:123456789:web:abc..."
+};'></textarea>
+      <div class="setup-error" id="setup-error">No se pudo leer la configuración. Asegúrate de pegar el objeto completo.</div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="useLocalMode()">Usar sin Firebase (demo local)</button>
+      <button class="btn btn-primary" onclick="saveFirebaseConfig()" style="flex:1.5">Conectar →</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="lp-progress" id="lpProgress" aria-hidden="true"></div>
+
+<header class="lp-nav" id="lpNav">
+  <div class="lp-wrap lp-nav-in">
+    <a class="lp-brand" href="#inicio" aria-label="La Trattoria, inicio">
+      <span class="lp-mark" id="brandMark" aria-hidden="true"></span>
+      <span class="lp-brand-txt"><b id="rest-name">La Trattoria</b><small id="rest-tagline">Pizzeria italiana</small></span>
+    </a>
+    <nav class="lp-links" aria-label="Principal">
+      <a href="#casa" data-nav>La casa</a>
+      <a href="#ruleta" data-nav>La ruleta</a>
+      <a href="#carta" data-nav>Carta</a>
+      <a href="#visita" data-nav>Visítanos</a>
+    </nav>
+    <div class="lp-nav-end">
+      <a class="lp-btn lp-btn-solid lp-nav-cta lp-magnetic" href="#reservar"><span>Reservar mesa</span></a>
+      <button class="lp-burger" id="navToggle" type="button" aria-expanded="false" aria-controls="navSheet" aria-label="Abrir menú"><i></i><i></i></button>
+    </div>
+  </div>
+  <div class="lp-sheet" id="navSheet" hidden>
+    <nav class="lp-wrap" aria-label="Menú móvil">
+      <a href="#casa">La casa</a>
+      <a href="#ruleta">La ruleta</a>
+      <a href="#carta">Carta</a>
+      <a href="#reservar">Reservar mesa</a>
+      <a href="#visita">Visítanos</a>
+      <p class="lp-hand">Serra del Cadí, 7 · <a href="tel:+34973220841">973 22 08 41</a></p>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="lp-hero">
+    <div class="lp-wrap lp-hero-grid">
+      <div class="lp-hero-copy">
+        <p class="lp-hello lp-hand">Benvenuti a La Trattoria</p>
+        <h1 class="lp-title" aria-label="La auténtica pizza italiana, en Lleida.">
+          <span class="w" style="--i:0">La</span> <span class="w" style="--i:1">auténtica</span>
+          <span class="w" style="--i:2">pizza</span> <span class="w" style="--i:3"><span class="lp-under"><em>italiana</em><svg viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M4 16C60 6 120 4 180 9s90 8 116 2"/></svg></span>,</span>
+          <span class="w" style="--i:5">en</span> <span class="w" style="--i:6">Lleida.</span>
+        </h1>
+        <p class="lp-lead">Masa con el método napolitano, pasta hecha en casa y pizzas al horno de leña. Desde 2010 en Serra del Cadí.</p>
+        <div class="lp-cta-row">
+          <a class="lp-btn lp-btn-solid lp-magnetic" href="#reservar"><span>Reservar mesa</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="lp-btn lp-btn-line" href="#carta"><span>Ver la carta</span></a>
+        </div>
+        <div class="lp-open" id="openBadge"><i></i><span id="openText">Consultando horario</span></div>
+      </div>
+
+      <div class="lp-hero-art" aria-hidden="true">
+        <div class="lp-stage" id="heroArt">
+          <div class="lp-par lp-cloth-wrap" data-depth="6"><div class="lp-cloth"></div></div>
+          <div class="lp-par lp-ring-wrap" data-depth="10">
+            <svg class="lp-ringtext" viewBox="0 0 400 400">
+              <defs><path id="ringPath" d="M200,200 m-176,0 a176,176 0 1,1 352,0 a176,176 0 1,1 -352,0"/></defs>
+              <text><textPath href="#ringPath" textLength="1100">PIZZA NAPOLETANA ✦ PASTA FATTA IN CASA ✦ LLEIDA ✦ DAL 2010 ✦</textPath></text>
+            </svg>
+          </div>
+          <div class="lp-par lp-logo-wrap" data-depth="16"><div class="lp-logo"><img id="heroLogo" alt="" width="420" height="420"></div></div>
+
+          <div class="lp-par lp-doodle dd-basil" data-depth="30">
+            <svg viewBox="0 0 120 90"><g fill="#B9CFA4" stroke="#34502A" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M10 70C20 30 60 18 92 26C80 58 46 78 10 70Z"/><path d="M10 70C40 56 62 44 92 26" fill="none"/><path d="M58 64C72 48 96 44 112 50C102 70 80 80 58 64Z"/></g></svg>
+          </div>
+          <div class="lp-par lp-doodle dd-tomato" data-depth="24">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="56" r="34" fill="#E86A52" stroke="#1F1D1A" stroke-width="2.4"/><path d="M36 44c4-6 10-8 14-8" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".7"/><path d="M50 24c-6-6-14-6-18-2 7 1 12 3 18 6 6-3 11-5 18-6-4-4-12-4-18 2zM50 24V12" fill="#5B7F4A" stroke="#1F1D1A" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+          </div>
+          <div class="lp-par lp-doodle dd-steam" data-depth="20">
+            <svg viewBox="0 0 80 100"><g fill="none" stroke="#2E4A6E" stroke-width="2.6" stroke-linecap="round"><path class="st s1" d="M16 92C4 76 28 66 16 50S20 26 16 10"/><path class="st s2" d="M40 92C28 76 52 66 40 50S44 26 40 10"/><path class="st s3" d="M64 92C52 76 76 66 64 50S68 26 64 10"/></g></svg>
+          </div>
+          <div class="lp-par lp-doodle dd-star" data-depth="34">
+            <svg viewBox="0 0 40 40"><path d="M20 3l3.5 12.5L36 20l-12.5 3.5L20 36l-3.5-12.5L4 20l12.5-4.5z" fill="#F2C14E" stroke="#1F1D1A" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="lp-par lp-note-wrap" data-depth="22">
+            <p class="lp-note lp-hand">¡desde 2010!</p>
+            <svg class="lp-note-arrow" viewBox="0 0 90 60"><path d="M6 8C30 6 58 16 72 44M72 44l-12-4M72 44l2-12" fill="none" stroke="#1F1D1A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="lp-scroll-cue" href="#casa" aria-label="Bajar a La casa"><span class="lp-hand">baja, que hay más</span><svg viewBox="0 0 24 36" aria-hidden="true"><path d="M12 4v26M5 23l7 8 7-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  </section>
+
+  <div class="lp-mq-clip" aria-hidden="true">
+    <div class="lp-marquee"><div class="lp-mq-track" id="mqTrack"></div></div>
+  </div>
+
+  <section class="lp-section lp-casa" id="casa">
+    <div class="lp-wrap">
+      <div class="lp-casa-grid">
+        <div class="lp-head" data-reveal>
+          <span class="lp-eyebrow">La casa</span>
+          <h2 class="lp-h2">Una trattoria de barrio, <em>desde 2010</em>.</h2>
+          <p class="lp-sub">Aquí la masa se trabaja con el método napolitano, la pasta se hace en casa y las pizzas salen del horno de leña. La carta de siempre, en Carrer Serra del Cadí.</p>
+          <div class="lp-stats">
+            <div class="lp-stat" data-reveal><b data-count="2010">2010</b><span>abrimos en Lleida</span></div>
+            <div class="lp-stat" data-reveal><b data-count="18">18</b><span>pizzas en la carta</span></div>
+            <div class="lp-stat" data-reveal><b data-count="11">11</b><span>pastas distintas</span></div>
+            <div class="lp-stat" data-reveal><b data-count="1">1</b><span>pizza sorpresa del pizzero</span></div>
+          </div>
+        </div>
+        <div class="lp-notes">
+          <article class="lp-card c1 lp-tilt" data-reveal>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 40V24a16 16 0 0 1 32 0v16z" fill="#FBE7E1"/><path d="M8 40V24a16 16 0 0 1 32 0v16zM4 40h40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 37c-4.5 0-6.5-3-6.5-6 0-3.8 4-5.2 4-9.4 4 2.1 9.2 5 9.2 10.3 0 3.1-2.6 5.1-6.7 5.1z" fill="#D2452E" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            <h3>Horno de leña</h3>
+            <p>Dieciocho pizzas, de la Margherita a la Número 1 Italia con mortadela, burrata y pistachos.</p>
+          </article>
+          <article class="lp-card c2 lp-tilt" data-reveal>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="30" rx="18" ry="9" fill="#FBEFCF"/><path d="M6 28c0 7 8 12 18 12s18-5 18-12H6z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M14 26c2-8 6-12 10-12s6 6 4 10M20 26c0-5 3-8 6-8M30 26c2-6 6-9 10-8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M34 8l4 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            <h3>Pasta hecha en casa</h3>
+            <p>Lasaña de la casa, carbonara con guanciale y yema, tortelloni, saccottino de pera y gorgonzola.</p>
+          </article>
+          <article class="lp-card c3 lp-tilt" data-reveal>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18" fill="#E3ECF6"/><circle cx="24" cy="24" r="18" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M24 6v18l13 9M24 24L9 31" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="17" r="2.4" fill="#D2452E"/><circle cx="31" cy="16" r="2.4" fill="#D2452E"/><circle cx="20" cy="34" r="2.4" fill="#5B7F4A"/></svg>
+            <h3>Método napolitano</h3>
+            <p>Masa fina en el centro y borde alto y esponjoso, como se hace en Nápoles.</p>
+          </article>
+          <article class="lp-card c4 lp-tilt" data-reveal>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 42V12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M24 20c-6 0-9-4-9-9 6 0 9 4 9 9zM24 20c6 0 9-4 9-9-6 0-9 4-9 9zM24 31c-6 0-9-4-9-9 6 0 9 4 9 9zM24 31c6 0 9-4 9-9-6 0-9 4-9 9z" fill="#E7EEDD" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg>
+            <h3>Sin gluten</h3>
+            <p>Pizza sin gluten a elegir. Avísanos al reservar y lo tenemos en cuenta.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-section lp-ruleta" id="ruleta">
+    <div class="lp-wrap lp-ruleta-grid">
+      <div class="lp-head" data-reveal>
+        <span class="lp-eyebrow">Menja i Calla</span>
+        <h2 class="lp-h2">¿No sabes qué pedir? <em>Que decida la ruleta.</em></h2>
+        <p class="lp-sub">En la carta está la Menja i Calla, la pizza al gusto del pizzero. Para los indecisos, aquí tienes otra opción: gira la ruleta y te proponemos una pizza.</p>
+        <div class="lp-cta-row">
+          <button class="lp-btn lp-btn-solid lp-magnetic" type="button" id="spinBtn"><span>Girar la ruleta</span></button>
+        </div>
+        <div class="lp-pick" id="pick" aria-live="polite">
+          <p class="lp-pick-empty lp-hand">Tu pizza aparecerá aquí</p>
+        </div>
+      </div>
+      <div class="lp-wheel-zone" data-reveal>
+        <div class="lp-wheel-box">
+          <svg class="lp-pointer" viewBox="0 0 60 70" aria-hidden="true"><path d="M30 64L8 18a24 24 0 1 1 44 0z" fill="#D2452E" stroke="#1F1D1A" stroke-width="3" stroke-linejoin="round"/><circle cx="30" cy="24" r="8" fill="#FFFDF8" stroke="#1F1D1A" stroke-width="2.5"/></svg>
+          <svg class="lp-wheel" id="wheel" viewBox="-210 -210 420 420" role="img" aria-label="Ruleta de pizzas"></svg>
+          <button class="lp-hub" type="button" id="hubBtn" aria-label="Girar la ruleta"><span class="lp-hand">¡gira!</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-section lp-carta" id="carta">
+    <div class="lp-wrap">
+      <div class="lp-menu-sheet" data-reveal>
+        <div class="lp-menu-top">
+          <div class="lp-head">
+            <span class="lp-eyebrow">Il menù</span>
+            <h2 class="lp-h2">La carta</h2>
+            <p class="lp-sub">Entrantes, ensaladas, pizzas, pasta, postres y vinos. Pregúntanos por los alérgenos antes de pedir.</p>
+          </div>
+          <p class="lp-menu-note lp-hand">elige sin prisa,<br>el horno espera</p>
+        </div>
+        <div class="lp-carta-tools">
+          <div class="lp-tabs" id="menuTabs" role="tablist" aria-label="Categorías de la carta"></div>
+          <div class="lp-search">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg>
+            <input id="menuSearch" type="search" placeholder="Buscar un plato o ingrediente" aria-label="Buscar en la carta" autocomplete="off">
+          </div>
+        </div>
+        <div class="lp-dishes" id="dishList" role="tabpanel" aria-live="polite"></div>
+        <p class="lp-note-small">Los precios pueden variar entre el local y el servicio a domicilio. <a href="https://cartadigital.barmanagerapp.com/site/index/show/LATRATTORIA" target="_blank" rel="noopener">Ver la carta digital del local</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-section lp-book" id="reservar">
+    <div class="lp-wrap lp-book-grid">
+      <div class="lp-book-intro" data-reveal>
+        <span class="lp-eyebrow">Prenota</span>
+        <h2 class="lp-h2">Reserva tu mesa <em>en un minuto</em>.</h2>
+        <p class="lp-sub">Elige comensales, día y hora. Al terminar recibes un código para consultar o cancelar tu reserva cuando quieras.</p>
+        <ul class="lp-facts">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <div><b>Turnos de reserva</b><span id="rest-hours">13:00–16:00 · 20:00–22:00</span></div>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+            <div><b>Dónde estamos</b><span id="rest-addr">Carrer Serra del Cadí, 7, 25006 Lleida</span></div>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+            <div><b>¿Más de diez personas?</b><span>Llámanos al <a href="tel:+34973220841">973 22 08 41</a>.</span></div>
+          </li>
+        </ul>
+        <p class="lp-hand lp-book-hand">te guardamos la mesa ↘</p>
+      </div>
+      <div class="lp-book-panel" data-reveal>
+
+<!-- PROGRESS -->
+<div id="progress-wrap">
+  <div class="prog-steps">
+    <div class="prog-step active" id="ps1"><div class="prog-dot">1</div><div class="prog-label">Comensales</div></div>
+    <div class="prog-step" id="ps2"><div class="prog-dot">2</div><div class="prog-label">Fecha</div></div>
+    <div class="prog-step" id="ps3"><div class="prog-dot">3</div><div class="prog-label">Horario</div></div>
+    <div class="prog-step" id="ps4"><div class="prog-dot">4</div><div class="prog-label">Datos</div></div>
+    <div class="prog-step" id="ps5"><div class="prog-dot">✓</div><div class="prog-label">Confirmado</div></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+
+  <!-- STEP 1 -->
+  <div class="step active" id="step-1">
+    <div class="card">
+      <h2>¿Para quién es la reserva?</h2>
+      <div class="sub">Comida o cena. Elige el número de comensales</div>
+      <div class="field">
+        <label>Número de comensales</label>
+        <select id="s1-party"><option value="">Selecciona...</option></select>
+      </div>
+      <button class="btn btn-primary btn-full" onclick="goStep(2)">Elegir fecha →</button>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:.9rem;font-weight:600">¿Necesitas cancelar?</div>
+          <div class="text-muted mt-8">Introduce tu código de reserva</div>
+        </div>
+        <button class="btn btn-ghost" style="padding:8px 14px;font-size:.8rem" onclick="toggleCancelSection()">Cancelar reserva</button>
+      </div>
+    </div>
+    <div id="cancel-section" class="card" style="display:none">
+      <h2 style="font-size:1rem;margin-bottom:12px">Cancelar mi reserva</h2>
+      <div class="field">
+        <label>Código de reserva</label>
+        <input type="text" id="cancel-code" placeholder="Ej: RES-A1B2C3" style="text-transform:uppercase">
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="toggleCancelSection()">Volver</button>
+        <button class="btn btn-danger" onclick="doCancelByCode()">Cancelar reserva</button>
+      </div>
+      <div id="cancel-result" style="margin-top:14px;font-size:.85rem;display:none"></div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step" id="step-2">
+    <div class="card">
+      <h2>Selecciona el día</h2>
+      <div class="sub" id="step2-sub">Elige una fecha disponible</div>
+      <div id="cal-strip"></div>
+      <button class="btn btn-ghost" onclick="goStep(1)">← Volver</button>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step" id="step-3">
+    <div class="card">
+      <h2>¿A qué hora?</h2>
+      <div class="sub" id="step3-sub">Horarios disponibles</div>
+      <div id="slots-container"></div>
+      <button class="btn btn-ghost" onclick="goStep(2)" style="margin-top:4px">← Volver</button>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step" id="step-4">
+    <div class="card">
+      <h2>Tus datos</h2>
+      <div class="sub">Necesitamos estos datos para confirmar tu reserva</div>
+      <div id="welcome-back">
+        <div class="wb-text">¡Bienvenido/a de nuevo, <b id="wb-name"></b>! Hemos rellenado tus datos..</div>
+      </div>
+      <div class="field"><label>Nombre completo *</label><input type="text" id="s4-name" placeholder="Ana García" autocomplete="name"></div>
+      <div class="field"><label>Teléfono *</label><input type="tel" id="s4-phone" placeholder="+34 600 000 000" autocomplete="tel" oninput="checkReturning()"></div>
+      <div class="field"><label>Email</label><input type="email" id="s4-email" placeholder="ana@email.com" autocomplete="email"></div>
+      <div class="field"><label>Alergias o comentarios</label><textarea id="s4-notes" placeholder="Alergia a frutos secos, silla para bebé..."></textarea></div>
+      <div class="divider"></div>
+      <div class="confirm-box" id="pre-summary">
+        <div class="confirm-row"><span class="lbl">Fecha</span><span class="val" id="sum-date"></span></div>
+        <div class="confirm-row"><span class="lbl">Hora</span><span class="val" id="sum-time"></span></div>
+        <div class="confirm-row"><span class="lbl">Comensales</span><span class="val" id="sum-party"></span></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="goStep(3)">← Volver</button>
+        <button class="btn btn-primary" onclick="doConfirm()" style="flex:2">Confirmar reserva ✓</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step" id="step-5" style="text-align:center">
+    <div class="card">
+      <div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+      <h2 style="font-size:1.4rem;margin-bottom:8px">¡Reserva confirmada!</h2>
+      <p class="text-muted">Te esperamos. Tu código de reserva:</p>
+      <div class="booking-code" id="final-code">RES-XXXXXX</div>
+      <div class="confirm-box" id="final-summary">
+        <div class="confirm-row"><span class="lbl">Restaurante</span><span class="val gold" id="fs-rest"></span></div>
+        <div class="confirm-row"><span class="lbl">Nombre</span><span class="val" id="fs-name"></span></div>
+        <div class="confirm-row"><span class="lbl">Fecha</span><span class="val" id="fs-date"></span></div>
+        <div class="confirm-row"><span class="lbl">Hora</span><span class="val" id="fs-time"></span></div>
+        <div class="confirm-row"><span class="lbl">Comensales</span><span class="val" id="fs-party"></span></div>
+      </div>
+      <div class="cal-buttons">
+        <button class="cal-btn" onclick="addToGoogleCal()">Google Calendar</button>
+        <button class="cal-btn" onclick="downloadICS()">Apple / Outlook</button>
+        <button class="cal-btn" onclick="shareWhatsApp()">Compartir por WhatsApp</button>
+      </div>
+      <button class="btn btn-ghost btn-full mt-16" onclick="newBooking()">Hacer otra reserva</button>
+    </div>
+  </div>
+
+</div><!-- #app -->
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-section lp-visit" id="visita">
+    <div class="lp-wrap">
+      <div class="lp-postcard" data-reveal>
+        <div class="lp-stamp" aria-hidden="true"><img id="stampLogo" alt=""></div>
+        <div class="lp-post-head">
+          <span class="lp-eyebrow">Dove siamo</span>
+          <h2 class="lp-h2">Ven a vernos a <em>Serra del Cadí</em>.</h2>
+        </div>
+        <div class="lp-visit-grid">
+          <div>
+            <h3>Dirección</h3>
+            <p id="visitAddr">Carrer Serra del Cadí, 7, 25006 Lleida</p>
+            <div class="lp-visit-actions">
+              <a class="lp-chip-btn" id="mapLink" href="https://www.google.com/maps/search/?api=1&query=Carrer%20Serra%20del%20Cad%C3%AD%207%2C%2025006%20Lleida" target="_blank" rel="noopener">Cómo llegar</a>
+              <button class="lp-chip-btn" type="button" id="copyAddr">Copiar dirección</button>
+            </div>
+          </div>
+          <div>
+            <h3>Horario</h3>
+            <ul class="lp-hours" id="visitHours"></ul>
+          </div>
+          <div>
+            <h3>Contacto y pedidos</h3>
+            <ul class="lp-contact">
+              <li><span>Teléfono</span><a href="tel:+34973220841">973 22 08 41</a></li>
+              <li><span>Email</span><a href="mailto:info@latrattoriapizzeria.com">info@latrattoriapizzeria.com</a></li>
+              <li><span>A domicilio</span><a href="https://pizzeria-la-trattoria-italiana-lleida.es/" target="_blank" rel="noopener">Pedir por Just Eat</a></li>
+              <li><span>Carta digital</span><a href="https://cartadigital.barmanagerapp.com/site/index/show/LATRATTORIA" target="_blank" rel="noopener">Abrir la carta del local</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-section lp-faq-sec" id="preguntas">
+    <div class="lp-wrap lp-faq-grid">
+      <div class="lp-head" data-reveal>
+        <span class="lp-eyebrow">Domande</span>
+        <h2 class="lp-h2">Preguntas <em>frecuentes</em></h2>
+        <p class="lp-hand lp-faq-hand">y si no está aquí,<br>llámanos</p>
+      </div>
+      <div class="lp-faq" data-reveal>
+        <details><summary>¿Hace falta reservar?</summary><p>No es obligatorio, pero reservar te asegura mesa en los turnos más llenos. Puedes hacerlo aquí mismo a cualquier hora del día.</p></details>
+        <details><summary>¿Cómo cancelo o cambio mi reserva?</summary><p>En el primer paso de la reserva hay una opción para cancelar con tu código. Para cambiar el día o la hora, cancela y reserva de nuevo, o llámanos.</p></details>
+        <details><summary>¿Tenéis pizza sin gluten?</summary><p>Sí, hay pizza sin gluten a elegir. Avísanos al reservar para tenerlo en cuenta.</p></details>
+        <details><summary>¿Puedo pedir a domicilio o para recoger?</summary><p>Sí. El servicio a domicilio funciona a través de Just Eat, y también puedes recoger tu pedido en el local.</p></details>
+        <details><summary>¿Qué días abrís?</summary><p>De miércoles a domingo, a mediodía y por la noche. Lunes y martes cerramos.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="lp-footer">
+  <div class="lp-footer-cloth" aria-hidden="true"></div>
+  <div class="lp-wrap">
+    <p class="lp-grazie">Grazie <em>mille.</em></p>
+    <p class="lp-hand lp-footer-hand">¡hasta la próxima pizza!</p>
+    <div class="lp-footer-row">
+      <span>La Trattoria · Carrer Serra del Cadí, 7 · 25006 Lleida</span>
+      <span><a href="tel:+34973220841">973 22 08 41</a> · <a href="mailto:info@latrattoriapizzeria.com">info@latrattoriapizzeria.com</a></span>
+      <a class="lp-top" href="#inicio">Volver arriba ↑</a>
+    </div>
+  </div>
+</footer>
+
+<div class="lp-fab" id="lpFab"><a class="lp-btn lp-btn-solid" href="#reservar"><span>Reservar mesa</span></a></div>
+<div class="lp-confetti" id="confetti" aria-hidden="true"></div>
+
+<!-- ADMIN ENTRY -->
+<div id="admin-entry" style="display:none;position:fixed;inset:0;background:rgba(24,34,28,.55);z-index:8500;align-items:center;justify-content:center">
+  <div class="card" style="max-width:360px;width:100%;margin:0">
+    <h2 style="margin-bottom:16px">Panel de Administración</h2>
+    <div class="field">
+      <label>Contraseña</label>
+      <input type="password" id="admin-pw" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkAdminPw()">
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="closeAdminEntry()">Cancelar</button>
+      <button class="btn btn-primary" onclick="checkAdminPw()">Entrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- CANCEL CONFIRM MODAL -->
+<div id="cancel-confirm" style="display:none;position:fixed;inset:0;background:rgba(24,34,28,.55);z-index:9200;align-items:center;justify-content:center;padding:20px">
+  <div class="card" style="max-width:420px;width:100%;margin:0;border-color:var(--danger);border-width:1.5px">
+    
+    <h3 style="color:var(--danger);margin-bottom:10px;text-align:center;font-size:1.1rem">Cancelar reserva</h3>
+    <p id="cancel-confirm-info" style="font-size:.9rem;color:var(--text);margin-bottom:8px;text-align:center;font-weight:600"></p>
+    <div style="background:rgba(82,192,122,.08);border:1px solid rgba(82,192,122,.2);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:20px;text-align:center">
+      <span style="color:var(--success);font-size:.85rem">✓ La mesa quedará libre automáticamente para otros clientes</span>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" style="flex:1" onclick="document.getElementById('cancel-confirm').style.display='none'">No, mantener</button>
+      <button class="btn btn-danger" style="flex:1" id="cancel-confirm-btn">Sí, cancelar reserva</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-overlay">
+
+  <!-- TOPBAR -->
+  <div class="admin-topbar">
+    <div class="admin-topbar-left">
+      <h2>Administración</h2>
+      <div id="admin-sync-badge" style="font-size:.72rem;color:var(--muted)"></div>
+    </div>
+    <div class="admin-topbar-right">
+      <button class="btn btn-ghost" style="padding:8px 14px;font-size:.8rem" onclick="printSheet()">Imprimir</button>
+      <button class="btn btn-danger" style="padding:8px 14px;font-size:.8rem" onclick="closeAdmin()">✕ Cerrar</button>
+    </div>
+  </div>
+
+  <div class="admin-body">
+
+    <div class="admin-tabs">
+      <button class="a-tab active" onclick="showTab('tab-reservas')">Reservas</button>
+      <button class="a-tab" onclick="showTab('tab-nueva')">Nueva</button>
+      <button class="a-tab" onclick="showTab('tab-bloqueos')">Bloqueos</button>
+      <button class="a-tab" onclick="showTab('tab-stats')">Estadísticas</button>
+      <button class="a-tab" onclick="showTab('tab-config')">Config</button>
+    </div>
+
+    <!-- RESERVAS -->
+    <div class="a-panel active" id="tab-reservas">
+
+      <!-- QUICK STATS HOY -->
+      <div class="today-bar" id="today-bar">
+        <div class="today-stat"><span class="ts-num" id="ts-today">—</span><span class="ts-lbl">Reservas hoy</span></div>
+        <div class="today-stat"><span class="ts-num" id="ts-confirmed">—</span><span class="ts-lbl">Confirmadas</span></div>
+        <div class="today-stat ts-free"><span class="ts-num" id="ts-free">—</span><span class="ts-lbl">Mesas libres ahora</span></div>
+        <div class="today-stat"><span class="ts-num" id="ts-pax">—</span><span class="ts-lbl">Comensales hoy</span></div>
+      </div>
+
+      <div class="search-bar">
+        <input type="text" id="admin-search" placeholder=" Buscar nombre, teléfono o código..." oninput="renderAdminTable()">
+        <select id="admin-filter-date" onchange="renderAdminTable()">
+          <option value="">Todas las fechas</option>
+          <option value="today">Hoy</option>
+          <option value="tomorrow">Mañana</option>
+          <option value="week">Esta semana</option>
+        </select>
+        <select id="admin-filter-status" onchange="renderAdminTable()">
+          <option value="">Todos los estados</option>
+          <option value="confirmed">Confirmadas</option>
+          <option value="seated">En mesa</option>
+          <option value="cancelled">Canceladas</option>
+          <option value="noshow">No-show</option>
+        </select>
+      </div>
+
+      <div style="overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--card)">
+        <table class="res-table" id="admin-table">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Cliente</th>
+              <th>Hora · Fecha</th>
+              <th>Pers.</th>
+              <th>Notas</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="admin-tbody"></tbody>
+        </table>
+      </div>
+      <div id="admin-empty" style="text-align:center;padding:60px 20px;color:var(--muted);display:none">
+        
+        <div>No hay reservas que mostrar</div>
+      </div>
+    </div>
+
+    <!-- NUEVA RESERVA -->
+    <div class="a-panel" id="tab-nueva">
+      <div class="manual-form">
+        <h3 style="font-size:1rem;margin-bottom:16px;color:var(--accent)">Crear reserva manualmente (teléfono / walk-in)</h3>
+        <div class="cfg-grid">
+          <div class="field"><label>Nombre *</label><input type="text" id="m-name" placeholder="Nombre del cliente"></div>
+          <div class="field"><label>Teléfono *</label><input type="tel" id="m-phone" placeholder="+34 600..."></div>
+          <div class="field"><label>Email</label><input type="email" id="m-email" placeholder="email@..."></div>
+          <div class="field"><label>Fecha *</label><input type="date" id="m-date"></div>
+          <div class="field"><label>Hora *</label><input type="time" id="m-time" step="1800"></div>
+          <div class="field"><label>Comensales *</label><select id="m-party"></select></div>
+        </div>
+        <div class="field"><label>Notas</label><textarea id="m-notes" placeholder="Alergias, peticiones especiales..."></textarea></div>
+        <button class="btn btn-primary" onclick="createManualBooking()">Crear reserva</button>
+      </div>
+    </div>
+
+    <!-- BLOQUEOS -->
+    <div class="a-panel" id="tab-bloqueos">
+      <div class="card" style="margin-bottom:16px">
+        <h3 style="font-size:.95rem;color:var(--accent);margin-bottom:12px">Bloquear fechas (festivos, eventos privados...)</h3>
+        <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap">
+          <div class="field" style="flex:1;margin-bottom:0"><label>Fecha</label><input type="date" id="block-date-input"></div>
+          <div class="field" style="flex:1;margin-bottom:0"><label>Motivo (opcional)</label><input type="text" id="block-reason" placeholder="Evento privado, festivo..."></div>
+          <button class="btn btn-primary" onclick="addBlock()">Bloquear</button>
+        </div>
+        <div class="blocked-list" id="blocked-list"></div>
+      </div>
+    </div>
+
+    <!-- ESTADÍSTICAS -->
+    <div class="a-panel" id="tab-stats">
+      <div class="stats-grid" id="stats-cards"></div>
+      <div class="chart-wrap"><div class="chart-title">Reservas por día de la semana</div><svg id="chart-dow" height="130" style="width:100%"></svg></div>
+      <div class="chart-wrap"><div class="chart-title">Horas pico</div><svg id="chart-hours" height="130" style="width:100%"></svg></div>
+      <div class="chart-wrap"><div class="chart-title">Tendencia mensual (últimos 6 meses)</div><svg id="chart-monthly" height="130" style="width:100%"></svg></div>
+    </div>
+
+    <!-- CONFIGURACIÓN -->
+    <div class="a-panel" id="tab-config">
+      <div class="card">
+        <h3 style="font-size:.95rem;color:var(--accent);margin-bottom:16px">Información del restaurante</h3>
+        <div class="cfg-grid">
+          <div class="field"><label>Nombre</label><input type="text" id="cfg-name"></div>
+          <div class="field"><label>Subtítulo</label><input type="text" id="cfg-tagline"></div>
+          <div class="field"><label>Dirección</label><input type="text" id="cfg-addr"></div>
+          <div class="field"><label>WhatsApp (sin +)</label><input type="text" id="cfg-wa"></div>
+          <div class="field"><label>Nº de mesas por franja</label><input type="number" id="cfg-cap" min="1" max="200"></div>
+          <div class="field"><label>Máx. comensales por reserva</label><input type="number" id="cfg-max" min="1" max="50"></div>
+          <div class="field"><label>Días disponibles por adelantado</label><input type="number" id="cfg-ahead" min="1" max="120"></div>
+          <div class="field"><label>Contraseña admin</label><input type="password" id="cfg-pw"></div>
+        </div>
+        <div class="divider"></div>
+        <h3 style="font-size:.95rem;color:var(--accent);margin-bottom:16px">Horarios</h3>
+        <div class="cfg-grid">
+          <div class="field"><label>Comida — inicio</label><input type="time" id="cfg-ls"></div>
+          <div class="field"><label>Comida — fin</label><input type="time" id="cfg-le"></div>
+          <div class="field"><label>Cena — inicio</label><input type="time" id="cfg-ds"></div>
+          <div class="field"><label>Cena — fin</label><input type="time" id="cfg-de"></div>
+          <div class="field"><label>Intervalo entre franjas (min)</label><input type="number" id="cfg-int" min="15" max="120" step="15"></div>
+        </div>
+        <div class="divider"></div>
+        <h3 style="font-size:.95rem;color:var(--accent);margin-bottom:16px">Días cerrados</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px" id="closed-days-wrap">
+          <label class="day-toggle" data-d="0">Dom</label>
+          <label class="day-toggle" data-d="1">Lun</label>
+          <label class="day-toggle" data-d="2">Mar</label>
+          <label class="day-toggle" data-d="3">Mié</label>
+          <label class="day-toggle" data-d="4">Jue</label>
+          <label class="day-toggle" data-d="5">Vie</label>
+          <label class="day-toggle" data-d="6">Sáb</label>
+        </div>
+        <button class="btn btn-primary" onclick="saveConfig()">Guardar configuración</button>
+        <button class="btn btn-danger" style="margin-left:10px" id="btn-reset-demo" onclick="resetDemo()">Restablecer datos de ejemplo</button>
+        <div class="divider"></div>
+        <h3 style="font-size:.95rem;color:var(--accent);margin-bottom:12px">Base de datos</h3>
+        <p class="text-muted" style="margin-bottom:12px" id="db-mode-info"></p>
+        <button class="btn btn-ghost" style="font-size:.8rem" onclick="reconfigureFirebase()">Cambiar configuración Firebase</button>
+      </div>
+    </div>
+
+    </div><!-- /.admin-body -->
+  </div><!-- /#admin-overlay -->
+
+<!-- TOAST -->
+<div id="toast"></div>
+<!-- PRINT -->
+<div id="print-area"><div id="print-content"></div></div>
+
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  CONSTANTS
+// ═══════════════════════════════════════════════════════════════
+const KEY_FB_CFG  = 'fb_config_v1';    // Firebase config in localStorage
+const KEY_LOCAL_RES = 'reservas_local_v1';
+const KEY_LOCAL_CFG = 'config_local_v1';
+
+// Almacenamiento seguro: si el navegador bloquea localStorage, se usa memoria
+const LS = (() => {
+  const mem = {}; let ok = true;
+  try { localStorage.setItem('__t', '1'); localStorage.removeItem('__t'); } catch (e) { ok = false; }
+  return {
+    getItem: k => ok ? localStorage.getItem(k) : (k in mem ? mem[k] : null),
+    setItem: (k, v) => { if (ok) localStorage.setItem(k, v); else mem[k] = String(v); },
+    removeItem: k => { if (ok) localStorage.removeItem(k); else delete mem[k]; }
+  };
+})();
+
+const DEFAULTS = {
+  name:         'La Trattoria',
+  tagline:      'Pizzeria italiana',
+  address:      'Carrer Serra del Cadí, 7, 25006 Lleida',
+  whatsapp:     '',
+  tableCap:     20,          // mesas disponibles por franja
+  maxParty:     10,
+  daysAhead:    30,
+  adminPass:    'latrattoria2026',
+  closedDays:   [1, 2],      // 0=Dom, 1=Lun, 2=Mar ...
+  blockedDates: [],
+  lunch:  { start:'13:00', end:'16:00', int:30 },   // última reserva a las 16:00
+  dinner: { start:'20:00', end:'22:00', int:30 },   // última reserva a las 22:00
+};
+
+// Datos de ejemplo en el panel (solo en modo local, nunca con Firebase).
+// Poner a false en producción.
+const DEMO_LOCAL_SEED = true;
+
+const DAY_NAMES  = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+const DAY_SHORT  = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+const MONTH_NAMES= ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
+// ═══════════════════════════════════════════════════════════════
+//  DUAL-MODE DATA LAYER
+//  MODE_FIREBASE = true  → Firestore (real-time, multi-device)
+//  MODE_FIREBASE = false → localStorage (offline, single device)
+// ═══════════════════════════════════════════════════════════════
+let MODE_FIREBASE = false;
+let db, reservasCol, configDocRef;
+
+// Local cache (always kept in sync by listeners)
+let _cache = { reservas: [], config: null };
+
+// ---- Read (synchronous, from cache) ----
+function getRes() { return _cache.reservas; }
+function getCfg() { return Object.assign({}, DEFAULTS, _cache.config || {}); }
+
+// ---- Write (async, source of truth) ----
+async function addReservation(booking) {
+  if (MODE_FIREBASE) {
+    await reservasCol.doc(booking.id).set(booking);
+  } else {
+    const arr = JSON.parse(LS.getItem(KEY_LOCAL_RES)||'[]');
+    arr.push(booking);
+    LS.setItem(KEY_LOCAL_RES, JSON.stringify(arr));
+    _cache.reservas = arr;
+    if (S.adminOpen) renderAdminTable();
+  }
+}
+
+async function updateReservation(id, updates) {
+  if (MODE_FIREBASE) {
+    await reservasCol.doc(id).update(updates);
+  } else {
+    const arr = _cache.reservas.map(r => r.id === id ? Object.assign({}, r, updates) : r);
+    LS.setItem(KEY_LOCAL_RES, JSON.stringify(arr));
+    _cache.reservas = arr;
+    if (S.adminOpen) renderAdminTable();
+  }
+}
+
+async function setCfg(o) {
+  if (MODE_FIREBASE) {
+    await configDocRef.set(o);
+  } else {
+    LS.setItem(KEY_LOCAL_CFG, JSON.stringify(o));
+    _cache.config = o;
+    updateHeader();
+    populatePartySelect();
+  }
+}
+
+async function autocleanup() {
+  const today = todayISO();
+  const old = _cache.reservas.filter(r => r.date < today);
+  if (!old.length) return;
+  if (MODE_FIREBASE) {
+    const batch = db.batch();
+    old.forEach(r => batch.delete(reservasCol.doc(r.id)));
+    await batch.commit();
+  } else {
+    const kept = _cache.reservas.filter(r => r.date >= today);
+    LS.setItem(KEY_LOCAL_RES, JSON.stringify(kept));
+    _cache.reservas = kept;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════════
+const S = { step:1, party:0, date:'', time:'', adminOpen:false };
+
+// ═══════════════════════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════════════════════
+function todayISO() { return new Date().toISOString().split('T')[0]; }
+function genId() {
+  const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let id='RES-';
+  for(let i=0;i<6;i++) id+=c[Math.floor(Math.random()*c.length)];
+  return id;
+}
+function fmtDate(iso) {
+  const d = new Date(iso+'T12:00:00');
+  return `${DAY_NAMES[d.getDay()]}, ${d.getDate()} de ${MONTH_NAMES[d.getMonth()]}`;
+}
+function addDays(iso, n) {
+  const d = new Date(iso+'T12:00:00');
+  d.setDate(d.getDate()+n);
+  return d.toISOString().split('T')[0];
+}
+
+let _toastTimer;
+function toast(msg, type='ok', dur=3000) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show ' + (type==='err'?'err':type==='info'?'info':'ok');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(()=>el.className='', dur);
+}
+
+function setSyncStatus(state, label) {
+  const dot = document.getElementById('sync-dot');
+  const lbl = document.getElementById('sync-label');
+  dot.className = 'sync-dot ' + state;
+  lbl.textContent = label;
+  const badge = document.getElementById('admin-sync-badge');
+  if (badge) badge.textContent = label;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SLOT LOGIC (uses _cache.reservas synchronously)
+// ═══════════════════════════════════════════════════════════════
+function timeSlots(svc) {
+  const slots = [];
+  let [sh,sm] = svc.start.split(':').map(Number);
+  let [eh,em] = svc.end.split(':').map(Number);
+  let cur = sh*60+sm, end = eh*60+em;
+  while (cur<=end) {
+    slots.push(String(Math.floor(cur/60)).padStart(2,'0')+':'+String(cur%60).padStart(2,'0'));
+    cur += svc.int;
+  }
+  return slots;
+}
+
+function slotOccupancy(date, time) {
+  return getRes().filter(r=>r.date===date&&r.time===time&&r.status!=='cancelled').length;
+}
+function slotRemaining(date, time) {
+  const cfg = getCfg();
+  return Math.max(0, (cfg.tableCap||20) - slotOccupancy(date,time));
+}
+function slotAvailable(date, time) { return slotRemaining(date,time) > 0; }
+
+// ═══════════════════════════════════════════════════════════════
+//  STEP MACHINE
+// ═══════════════════════════════════════════════════════════════
+function goStep(n) {
+  if (n===2 && !S.party) { toast('Selecciona cuántos comensales','err'); return; }
+  if (n===3 && !S.date)  { toast('Selecciona una fecha','err'); return; }
+  if (n===4 && !S.time)  { toast('Selecciona un horario','err'); return; }
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step-'+n).classList.add('active');
+  S.step = n;
+  updateProgress(n);
+  if (n===2) renderCalendar();
+  if (n===3) renderSlots();
+  if (n===4) renderSummary();
+  const _sec = document.getElementById('reservar'); if (_sec && _sec.scrollIntoView) _sec.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function updateProgress(n) {
+  for (let i=1;i<=5;i++) {
+    const el = document.getElementById('ps'+i);
+    el.classList.remove('active','done');
+    if (i<n) el.classList.add('done');
+    else if (i===n) el.classList.add('active');
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  CALENDAR
+// ═══════════════════════════════════════════════════════════════
+function renderCalendar() {
+  const cfg = getCfg();
+  const strip = document.getElementById('cal-strip');
+  const sub   = document.getElementById('step2-sub');
+  const closedNames = cfg.closedDays.map(d=>DAY_NAMES[d]).join(', ');
+  sub.textContent = closedNames ? `Cerrado: ${closedNames}` : 'Todos los días disponibles';
+  strip.innerHTML = '';
+  const today = todayISO();
+  for (let i=0; i<cfg.daysAhead; i++) {
+    const iso = addDays(today,i);
+    const d   = new Date(iso+'T12:00:00');
+    const dow = d.getDay();
+    const blocked = (cfg.blockedDates||[]).some(b=>b.date===iso);
+    const closed  = cfg.closedDays.includes(dow);
+    const el = document.createElement('div');
+    el.className = 'cal-day'+(closed?' closed':'')+(blocked?' blocked':'');
+    el.innerHTML = `<div class="cal-dn">${DAY_SHORT[dow]}</div><div class="cal-dd">${d.getDate()}</div><div class="cal-dm">${MONTH_NAMES[d.getMonth()]}</div>`;
+    if (!closed && !blocked) el.onclick = ()=>selectDate(iso,el);
+    if (iso===S.date) el.classList.add('selected');
+    strip.appendChild(el);
+  }
+}
+
+function selectDate(iso, el) {
+  S.date = iso; S.time = '';
+  document.querySelectorAll('.cal-day').forEach(d=>d.classList.remove('selected'));
+  el.classList.add('selected');
+  setTimeout(()=>goStep(3), 200);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SLOTS
+// ═══════════════════════════════════════════════════════════════
+function renderSlots() {
+  const cfg = getCfg();
+  document.getElementById('step3-sub').textContent = fmtDate(S.date);
+  const wrap = document.getElementById('slots-container');
+  wrap.innerHTML = '';
+  [{label:'Comida', svc:cfg.lunch},{label:'Cena', svc:cfg.dinner}].forEach(sec=>{
+    const div = document.createElement('div'); div.className='slot-section';
+    div.innerHTML = `<div class="slot-title">${sec.label}</div>`;
+    const grid = document.createElement('div'); grid.className='slots';
+    timeSlots(sec.svc).forEach(t=>{
+      const rem   = slotRemaining(S.date,t);
+      const avail = rem>0;
+      const cap   = cfg.tableCap||20;
+      const few   = avail && rem<=Math.ceil(cap*.2);
+      const el = document.createElement('div');
+      el.className = 'slot'+(t===S.time?' selected':'')+(avail?few?' few':'':' full');
+      el.innerHTML = `${t}<span class="slot-avail">${avail?(few?`${rem} mesas`:''):'Completo'}</span>`;
+      if (avail) el.onclick = ()=>{
+        document.querySelectorAll('.slot').forEach(s=>s.classList.remove('selected'));
+        el.classList.add('selected'); S.time=t;
+        setTimeout(()=>goStep(4), 250);
+      };
+      grid.appendChild(el);
+    });
+    div.appendChild(grid); wrap.appendChild(div);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SUMMARY
+// ═══════════════════════════════════════════════════════════════
+function renderSummary() {
+  document.getElementById('sum-date').textContent  = fmtDate(S.date);
+  document.getElementById('sum-time').textContent  = S.time;
+  document.getElementById('sum-party').textContent = S.party+' persona'+(S.party===1?'':'s');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  RETURNING CUSTOMER
+// ═══════════════════════════════════════════════════════════════
+function checkReturning() {
+  const phone = document.getElementById('s4-phone').value.replace(/\D/g,'');
+  if (phone.length<9) { document.getElementById('welcome-back').style.display='none'; return; }
+  const past = getRes().filter(r=>r.phone.replace(/\D/g,'')===phone&&r.status!=='cancelled');
+  if (past.length) {
+    const last = past.sort((a,b)=>b.createdAt-a.createdAt)[0];
+    document.getElementById('wb-name').textContent = last.name;
+    document.getElementById('s4-name').value  = last.name;
+    document.getElementById('s4-email').value = last.email||'';
+    document.getElementById('welcome-back').style.display = 'flex';
+  } else {
+    document.getElementById('welcome-back').style.display = 'none';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  CONFIRM BOOKING
+// ═══════════════════════════════════════════════════════════════
+async function doConfirm() {
+  const name  = document.getElementById('s4-name').value.trim();
+  const phone = document.getElementById('s4-phone').value.trim();
+  const email = document.getElementById('s4-email').value.trim();
+  const notes = document.getElementById('s4-notes').value.trim();
+  if (!name)  { toast('Introduce tu nombre','err'); return; }
+  if (!phone) { toast('Introduce tu teléfono','err'); return; }
+  if (!slotAvailable(S.date,S.time)) { toast('¡Ups! Ese horario ya no tiene mesas. Elige otro.','err'); goStep(3); return; }
+  const id = genId();
+  const booking = { id, date:S.date, time:S.time, party:S.party, name, phone, email, notes, status:'confirmed', createdAt:Date.now() };
+  try {
+    await addReservation(booking);
+    showSuccess(booking);
+  } catch(e) {
+    toast('Error al guardar la reserva. Inténtalo de nuevo.','err');
+    console.error(e);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SUCCESS
+// ═══════════════════════════════════════════════════════════════
+function showSuccess(b) {
+  const cfg = getCfg();
+  document.getElementById('final-code').textContent = b.id;
+  document.getElementById('fs-rest').textContent    = cfg.name;
+  document.getElementById('fs-name').textContent    = b.name;
+  document.getElementById('fs-date').textContent    = fmtDate(b.date);
+  document.getElementById('fs-time').textContent    = b.time;
+  document.getElementById('fs-party').textContent   = b.party+' persona'+(b.party===1?'':'s');
+  goStep(5);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  CALENDAR INTEGRATIONS
+// ═══════════════════════════════════════════════════════════════
+function getLastBooking() {
+  const res = getRes();
+  return res.length ? res.sort((a,b)=>b.createdAt-a.createdAt)[0] : null;
+}
+function addToGoogleCal() {
+  const cfg=getCfg(), b=getLastBooking(); if(!b) return;
+  const [h,m]=b.time.split(':');
+  const start=b.date.replace(/-/g,'')+'T'+h+m+'00';
+  const endH=String(Number(h)+2).padStart(2,'0');
+  const end=b.date.replace(/-/g,'')+'T'+endH+m+'00';
+  window.open(`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Reserva '+cfg.name)}&dates=${start}/${end}&details=${encodeURIComponent('Código: '+b.id)}&location=${encodeURIComponent(cfg.address)}`,'_blank');
+}
+function downloadICS() {
+  const cfg=getCfg(), b=getLastBooking(); if(!b) return;
+  const [h,m]=b.time.split(':');
+  const dt=b.date.replace(/-/g,'')+'T'+h+m+'00';
+  const endH=String(Number(h)+2).padStart(2,'0');
+  const dtEnd=b.date.replace(/-/g,'')+'T'+endH+m+'00';
+  const ics=`BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:${dt}\nDTEND:${dtEnd}\nSUMMARY:Reserva ${cfg.name}\nDESCRIPTION:Código: ${b.id}\\nComensales: ${b.party}\nLOCATION:${cfg.address}\nEND:VEVENT\nEND:VCALENDAR`;
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));
+  a.download='reserva.ics'; a.click();
+}
+function shareWhatsApp() {
+  const cfg=getCfg(), b=getLastBooking(); if(!b) return;
+  const msg=`✅ Reserva confirmada en ${cfg.name}\n📅 ${fmtDate(b.date)} a las ${b.time}\n👥 ${b.party} persona${b.party===1?'':'s'}\n🔖 Código: ${b.id}`;
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SELF-CANCEL
+// ═══════════════════════════════════════════════════════════════
+function toggleCancelSection() {
+  const s = document.getElementById('cancel-section');
+  s.style.display = s.style.display==='block' ? 'none' : 'block';
+}
+async function doCancelByCode() {
+  const code = document.getElementById('cancel-code').value.trim().toUpperCase();
+  const res  = document.getElementById('cancel-result');
+  if (!code) { toast('Introduce tu código de reserva','err'); return; }
+  const r = getRes().find(r=>r.id===code);
+  if (!r) {
+    res.style.display='block'; res.style.color='var(--danger)';
+    res.textContent='No encontramos ninguna reserva con ese código.'; return;
+  }
+  if (r.status==='cancelled') {
+    res.style.display='block'; res.style.color='var(--muted)';
+    res.textContent='Esta reserva ya fue cancelada.'; return;
+  }
+  try {
+    await updateReservation(code, {status:'cancelled'});
+    res.style.display='block'; res.style.color='var(--success)';
+    res.textContent=`Reserva ${code} cancelada. ¡Hasta pronto!`;
+    toast('Reserva cancelada','ok');
+  } catch(e) { toast('Error al cancelar','err'); }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  NEW BOOKING
+// ═══════════════════════════════════════════════════════════════
+function newBooking() {
+  S.party=0; S.date=''; S.time='';
+  ['s4-name','s4-phone','s4-email','s4-notes','cancel-code'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
+  document.getElementById('cancel-result').style.display='none';
+  document.getElementById('cancel-section').style.display='none';
+  document.getElementById('welcome-back').style.display='none';
+  document.getElementById('s1-party').value='';
+  goStep(1);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  ADMIN — ENTRY
+// ═══════════════════════════════════════════════════════════════
+function showAdminEntry() {
+  const el = document.getElementById('admin-entry');
+  el.style.display = 'flex';
+  setTimeout(()=>document.getElementById('admin-pw').focus(),100);
+}
+function closeAdminEntry() {
+  document.getElementById('admin-entry').style.display='none';
+  document.getElementById('admin-pw').value='';
+}
+function checkAdminPw() {
+  const pw = document.getElementById('admin-pw').value;
+  if (pw===getCfg().adminPass) { closeAdminEntry(); openAdmin(); }
+  else toast('Contraseña incorrecta','err');
+}
+function openAdmin() {
+  document.getElementById('admin-overlay').classList.add('show');
+  S.adminOpen = true;
+  renderAdminTable(); renderBlockedDates(); loadConfigForm();
+  showTab('tab-reservas');
+  document.getElementById('db-mode-info').textContent = MODE_FIREBASE
+    ? 'Conectado a Firebase Firestore — sincronización en tiempo real activa.'
+    : 'Modo local (localStorage) — solo este dispositivo.';
+  const _rb = document.getElementById('btn-reset-demo'); if (_rb) _rb.style.display = MODE_FIREBASE ? 'none' : '';
+}
+function closeAdmin() {
+  document.getElementById('admin-overlay').classList.remove('show');
+  S.adminOpen = false;
+}
+
+let tapCount=0, tapTimer;
+document.getElementById('rest-name').addEventListener('click',()=>{
+  tapCount++; clearTimeout(tapTimer);
+  if(tapCount>=3){tapCount=0;showAdminEntry();return;}
+  tapTimer=setTimeout(()=>tapCount=0,600);
+});
+if(window.location.hash==='#admin') setTimeout(showAdminEntry,500);
+
+// ═══════════════════════════════════════════════════════════════
+//  ADMIN — TABS
+// ═══════════════════════════════════════════════════════════════
+function showTab(id) {
+  document.querySelectorAll('.a-tab').forEach((t,i)=>{
+    t.classList.toggle('active',['tab-reservas','tab-nueva','tab-bloqueos','tab-stats','tab-config'][i]===id);
+  });
+  document.querySelectorAll('.a-panel').forEach(p=>p.classList.toggle('active',p.id===id));
+  if(id==='tab-stats')  renderStats();
+  if(id==='tab-config') loadConfigForm();
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  ADMIN — RESERVAS TABLE
+// ═══════════════════════════════════════════════════════════════
+function renderAdminTable() {
+  const q   = (document.getElementById('admin-search').value||'').toLowerCase();
+  const fd  = document.getElementById('admin-filter-date').value;
+  const fs  = document.getElementById('admin-filter-status').value;
+  const today   = todayISO();
+  const tomorrow= addDays(today,1);
+  const weekEnd = addDays(today,7);
+
+  // — Quick stats hoy —
+  const all = getRes();
+  const cfg = getCfg();
+  const todayActive = all.filter(r=>r.date===today && r.status!=='cancelled' && r.status!=='noshow');
+  const todayConf   = all.filter(r=>r.date===today && r.status==='confirmed');
+  const todayPax    = todayActive.reduce((s,r)=>s+r.party,0);
+  // Mesas libres = tableCap - ocupación del slot más concurrido ahora en adelante
+  const now = new Date();
+  const hhmm = now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+  const slotsHoy = [...new Set(all.filter(r=>r.date===today).map(r=>r.time))];
+  const nextSlot = slotsHoy.filter(t=>t>=hhmm).sort()[0];
+  const freeMesas = nextSlot ? Math.max(0,(cfg.tableCap||20)-slotOccupancy(today,nextSlot)) : (cfg.tableCap||20);
+  document.getElementById('ts-today').textContent     = todayActive.length;
+  document.getElementById('ts-confirmed').textContent = todayConf.length;
+  document.getElementById('ts-free').textContent      = freeMesas;
+  document.getElementById('ts-pax').textContent       = todayPax;
+
+  // — Filtros —
+  let rows = all.sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
+  if(q)  rows = rows.filter(r=>(r.name+r.phone+r.id+(r.email||'')).toLowerCase().includes(q));
+  if(fd==='today')         rows=rows.filter(r=>r.date===today);
+  else if(fd==='tomorrow') rows=rows.filter(r=>r.date===tomorrow);
+  else if(fd==='week')     rows=rows.filter(r=>r.date>=today&&r.date<=weekEnd);
+  if(fs) rows=rows.filter(r=>r.status===fs);
+
+  const tbody=document.getElementById('admin-tbody');
+  const empty=document.getElementById('admin-empty');
+  if(!rows.length){tbody.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+
+  const lbl={confirmed:'Confirmada',seated:'En mesa',cancelled:'Cancelada',noshow:'No-show'};
+  const isDim = r => r.status==='cancelled'||r.status==='noshow';
+
+  tbody.innerHTML=rows.map(r=>`
+    <tr class="${isDim(r)?'res-row-dim':''}">
+      <td data-label="Código"><code class="res-code">${r.id}</code></td>
+      <td data-label="Cliente">
+        <div class="res-name">${r.name}</div>
+        <div class="res-phone">${r.phone}</div>
+      </td>
+      <td data-label="Hora · Fecha">
+        <div class="res-time">${r.time}</div>
+        <div class="res-date">${fmtDate(r.date)}</div>
+      </td>
+      <td data-label="Pers." style="text-align:center"><span class="party-badge">${r.party}p</span></td>
+      <td data-label="Notas" style="font-size:.78rem;color:var(--muted);max-width:160px">${r.notes||'—'}</td>
+      <td data-label="Estado"><span class="status-badge badge-${r.status}">${lbl[r.status]||r.status}</span></td>
+      <td data-label="Acciones">
+        ${r.status==='confirmed'?`<button class="act-btn act-seat" onclick="changeStatus('${r.id}','seated')">✓ Mesa</button>`:''}
+        ${r.status!=='cancelled'&&r.status!=='noshow'?`<button class="act-btn act-cancel" onclick="askCancel('${r.id}','${r.name.replace(/'/g,"\\'")}','${fmtDate(r.date)}','${r.time}')">✕ Cancelar</button>`:''}
+        ${r.status==='confirmed'?`<button class="act-btn act-noshow" onclick="changeStatus('${r.id}','noshow')">No-show</button>`:''}
+      </td>
+    </tr>`).join('');
+}
+
+function askCancel(id, name, date, time) {
+  document.getElementById('cancel-confirm-info').textContent = `${name}  ·  ${date} a las ${time}`;
+  const btn = document.getElementById('cancel-confirm-btn');
+  btn.onclick = async () => {
+    document.getElementById('cancel-confirm').style.display='none';
+    try {
+      await updateReservation(id, {status:'cancelled'});
+      renderAdminTable();
+      toast('Reserva cancelada — mesa liberada ✓','ok');
+    } catch(e){ toast('Error al cancelar','err'); }
+  };
+  document.getElementById('cancel-confirm').style.display='flex';
+}
+
+async function changeStatus(id, status) {
+  try {
+    await updateReservation(id, {status});
+    renderAdminTable();
+    const msgs = {seated:'Cliente sentado en mesa ✓', noshow:'Marcado como no-show'};
+    toast(msgs[status]||'Estado actualizado','ok');
+  } catch(e) { toast('Error al actualizar','err'); }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  ADMIN — MANUAL BOOKING
+// ═══════════════════════════════════════════════════════════════
+async function createManualBooking() {
+  const name  = document.getElementById('m-name').value.trim();
+  const phone = document.getElementById('m-phone').value.trim();
+  const email = document.getElementById('m-email').value.trim();
+  const date  = document.getElementById('m-date').value;
+  const time  = document.getElementById('m-time').value;
+  const party = Number(document.getElementById('m-party').value);
+  const notes = document.getElementById('m-notes').value.trim();
+  if(!name||!phone||!date||!time||!party){toast('Completa los campos obligatorios','err');return;}
+  if(!slotAvailable(date,time)){toast('Sin mesas disponibles en ese horario','err');return;}
+  const id=genId();
+  try {
+    await addReservation({id,date,time,party,name,phone,email,notes,status:'confirmed',createdAt:Date.now()});
+    toast('Reserva creada: '+id,'ok');
+    ['m-name','m-phone','m-email','m-notes'].forEach(f=>document.getElementById(f).value='');
+    document.getElementById('m-date').value='';
+    document.getElementById('m-time').value='';
+    document.getElementById('m-party').value='';
+    showTab('tab-reservas'); renderAdminTable();
+  } catch(e){toast('Error al crear la reserva','err');}
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  ADMIN — BLOCKED DATES
+// ═══════════════════════════════════════════════════════════════
+async function addBlock() {
+  const d      = document.getElementById('block-date-input').value;
+  const reason = document.getElementById('block-reason').value.trim();
+  if(!d){toast('Selecciona una fecha','err');return;}
+  const cfg=getCfg();
+  if(!cfg.blockedDates)cfg.blockedDates=[];
+  if(cfg.blockedDates.some(b=>b.date===d)){toast('Ya está bloqueada','info');return;}
+  cfg.blockedDates.push({date:d,reason:reason||'Fecha bloqueada'});
+  try{await setCfg(cfg);renderBlockedDates();toast('Fecha bloqueada','ok');}
+  catch(e){toast('Error al bloquear','err');}
+  document.getElementById('block-date-input').value='';
+  document.getElementById('block-reason').value='';
+}
+async function removeBlock(date) {
+  const cfg=getCfg();
+  cfg.blockedDates=(cfg.blockedDates||[]).filter(b=>b.date!==date);
+  try{await setCfg(cfg);renderBlockedDates();toast('Bloqueo eliminado','ok');}
+  catch(e){toast('Error','err');}
+}
+function renderBlockedDates() {
+  const cfg=getCfg();
+  const list=document.getElementById('blocked-list');
+  const blocks=cfg.blockedDates||[];
+  if(!blocks.length){list.innerHTML='<span class="text-muted">Sin fechas bloqueadas</span>';return;}
+  list.innerHTML=blocks.sort((a,b)=>a.date.localeCompare(b.date)).map(b=>
+    `<div class="blocked-chip">${fmtDate(b.date)} — ${b.reason}<button onclick="removeBlock('${b.date}')">✕</button></div>`
+  ).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  ADMIN — STATS
+// ═══════════════════════════════════════════════════════════════
+function renderStats() {
+  const all    = getRes();
+  const active = all.filter(r=>r.status!=='cancelled');
+  const today  = todayISO();
+  const todays = active.filter(r=>r.date===today);
+  const totalP = active.reduce((s,r)=>s+r.party,0);
+  document.getElementById('stats-cards').innerHTML=[
+    {num:all.length,      lbl:'Reservas totales'},
+    {num:todays.length,   lbl:'Reservas hoy'},
+    {num:totalP,          lbl:'Comensales totales'},
+    {num:all.filter(r=>r.status==='cancelled').length, lbl:'Cancelaciones'},
+  ].map(s=>`<div class="stat-card"><div class="stat-num">${s.num}</div><div class="stat-lbl">${s.lbl}</div></div>`).join('');
+
+  const dow=Array(7).fill(0);
+  active.forEach(r=>{const d=new Date(r.date+'T12:00:00');dow[d.getDay()]++;});
+  renderBarChart('chart-dow',DAY_SHORT,dow,'#D2452E');
+
+  const hMap={};
+  active.forEach(r=>{hMap[r.time]=(hMap[r.time]||0)+1;});
+  const hKeys=Object.keys(hMap).sort();
+  renderBarChart('chart-hours',hKeys,hKeys.map(k=>hMap[k]),'#2E4A6E');
+
+  const mMap={};
+  active.forEach(r=>{const k=r.date.substring(0,7);mMap[k]=(mMap[k]||0)+1;});
+  const mKeys=Object.keys(mMap).sort().slice(-6);
+  renderBarChart('chart-monthly',mKeys.map(k=>{const[,m]=k.split('-');return MONTH_NAMES[Number(m)-1];}),mKeys.map(k=>mMap[k]),'#5B7F4A');
+}
+
+function renderBarChart(svgId, labels, values, color) {
+  const el=document.getElementById(svgId); if(!el) return;
+  const W=el.parentElement.clientWidth-40||300, H=100, n=labels.length;
+  const max=Math.max(...values,1);
+  if(!n){el.innerHTML='<text x="50%" y="60" text-anchor="middle" fill="#66726A" font-size="13">Sin datos</text>';return;}
+  const bw=Math.max(8,Math.floor((W-n*4)/n));
+  const gap=Math.max(2,Math.floor((W-n*bw)/(n+1)));
+  let s=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} 130" width="${W}" height="130">`;
+  labels.forEach((lbl,i)=>{
+    const bh=values[i]?Math.max(4,Math.round((values[i]/max)*H)):0;
+    const x=gap+(i*(bw+gap)), y=H-bh+4;
+    s+=`<rect x="${x}" y="${y}" width="${bw}" height="${bh}" fill="${color}" rx="3" opacity=".85"/>`;
+    if(values[i]) s+=`<text x="${x+bw/2}" y="${y-4}" text-anchor="middle" fill="${color}" font-size="11" font-weight="600">${values[i]}</text>`;
+    s+=`<text x="${x+bw/2}" y="122" text-anchor="middle" fill="#66726A" font-size="10">${lbl}</text>`;
+  });
+  s+='</svg>'; el.outerHTML=s;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  ADMIN — CONFIG
+// ═══════════════════════════════════════════════════════════════
+function loadConfigForm() {
+  const cfg=getCfg();
+  document.getElementById('cfg-name').value   = cfg.name||'';
+  document.getElementById('cfg-tagline').value= cfg.tagline||'';
+  document.getElementById('cfg-addr').value   = cfg.address||'';
+  document.getElementById('cfg-wa').value     = cfg.whatsapp||'';
+  document.getElementById('cfg-cap').value    = cfg.tableCap||20;
+  document.getElementById('cfg-max').value    = cfg.maxParty||10;
+  document.getElementById('cfg-ahead').value  = cfg.daysAhead||30;
+  document.getElementById('cfg-pw').value     = cfg.adminPass||DEFAULTS.adminPass;
+  document.getElementById('cfg-ls').value     = cfg.lunch.start||'13:00';
+  document.getElementById('cfg-le').value     = cfg.lunch.end||'15:30';
+  document.getElementById('cfg-ds').value     = cfg.dinner.start||'20:30';
+  document.getElementById('cfg-de').value     = cfg.dinner.end||'22:30';
+  document.getElementById('cfg-int').value    = cfg.lunch.int||30;
+  document.querySelectorAll('.day-toggle').forEach(el=>{
+    const d=Number(el.dataset.d);
+    el.classList.toggle('active',(cfg.closedDays||[]).includes(d));
+    el.onclick=()=>el.classList.toggle('active');
+  });
+}
+
+async function saveConfig() {
+  const cfg=getCfg();
+  cfg.name       = document.getElementById('cfg-name').value.trim()||cfg.name;
+  cfg.tagline    = document.getElementById('cfg-tagline').value.trim();
+  cfg.address    = document.getElementById('cfg-addr').value.trim();
+  cfg.whatsapp   = document.getElementById('cfg-wa').value.trim();
+  cfg.tableCap   = Number(document.getElementById('cfg-cap').value)||20;
+  cfg.maxParty   = Number(document.getElementById('cfg-max').value)||10;
+  cfg.daysAhead  = Number(document.getElementById('cfg-ahead').value)||30;
+  cfg.adminPass  = document.getElementById('cfg-pw').value||DEFAULTS.adminPass;
+  const int      = Number(document.getElementById('cfg-int').value)||30;
+  cfg.lunch      = {start:document.getElementById('cfg-ls').value, end:document.getElementById('cfg-le').value, int};
+  cfg.dinner     = {start:document.getElementById('cfg-ds').value, end:document.getElementById('cfg-de').value, int};
+  cfg.closedDays = [...document.querySelectorAll('.day-toggle.active')].map(el=>Number(el.dataset.d));
+  try { await setCfg(cfg); updateHeader(); populatePartySelect(); toast('Configuración guardada ✓','ok'); }
+  catch(e) { toast('Error al guardar','err'); }
+}
+
+function updateHeader() {
+  const cfg=getCfg();
+  document.getElementById('rest-name').textContent    = cfg.name;
+  document.getElementById('rest-tagline').textContent = cfg.tagline;
+  document.getElementById('rest-addr').textContent    = cfg.address;
+  document.getElementById('rest-hours').textContent   = `${cfg.lunch.start}–${cfg.lunch.end} · ${cfg.dinner.start}–${cfg.dinner.end}`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  PRINT SHEET
+// ═══════════════════════════════════════════════════════════════
+function printSheet() {
+  const cfg=getCfg(), today=todayISO();
+  const res=getRes().filter(r=>r.date===today&&r.status!=='cancelled').sort((a,b)=>a.time.localeCompare(b.time));
+  document.getElementById('print-content').innerHTML=`
+    <div style="font-family:serif;max-width:800px;margin:0 auto;padding:20px">
+      <h1 style="font-size:1.6rem;border-bottom:2px solid #000;padding-bottom:8px;margin-bottom:4px">${cfg.name}</h1>
+      <p style="color:#666;margin-bottom:20px">Hoja de servicio — ${fmtDate(today)}</p>
+      <table style="width:100%;border-collapse:collapse;font-size:.9rem">
+        <thead><tr style="background:#f0f0f0">
+          <th style="padding:8px;border:1px solid #ccc;text-align:left">Hora</th>
+          <th style="padding:8px;border:1px solid #ccc;text-align:left">Código</th>
+          <th style="padding:8px;border:1px solid #ccc;text-align:left">Nombre</th>
+          <th style="padding:8px;border:1px solid #ccc;text-align:center">Pers.</th>
+          <th style="padding:8px;border:1px solid #ccc;text-align:left">Teléfono</th>
+          <th style="padding:8px;border:1px solid #ccc;text-align:left">Notas</th>
+        </tr></thead>
+        <tbody>${res.map(r=>`<tr>
+          <td style="padding:8px;border:1px solid #ccc;font-weight:700">${r.time}</td>
+          <td style="padding:8px;border:1px solid #ccc;font-size:.8rem;color:#666">${r.id}</td>
+          <td style="padding:8px;border:1px solid #ccc">${r.name}</td>
+          <td style="padding:8px;border:1px solid #ccc;text-align:center;font-weight:700">${r.party}</td>
+          <td style="padding:8px;border:1px solid #ccc;font-size:.82rem">${r.phone}</td>
+          <td style="padding:8px;border:1px solid #ccc;font-size:.8rem;color:#666">${r.notes||'—'}</td>
+        </tr>`).join('')}</tbody>
+      </table>
+      <p style="margin-top:16px;color:#666;font-size:.8rem">Total: ${res.length} reservas · ${res.reduce((s,r)=>s+r.party,0)} comensales</p>
+    </div>`;
+  document.getElementById('print-area').style.display='block';
+  window.print();
+  document.getElementById('print-area').style.display='none';
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  PARTY SELECT
+// ═══════════════════════════════════════════════════════════════
+function populatePartySelect() {
+  const cfg=getCfg();
+  ['s1-party','m-party'].forEach(id=>{
+    const el=document.getElementById(id); if(!el) return;
+    const prev=el.value;
+    el.innerHTML='<option value="">Selecciona...</option>';
+    for(let i=1;i<=cfg.maxParty;i++) el.innerHTML+=`<option value="${i}">${i} persona${i===1?'':'s'}</option>`;
+    if(prev) el.value=prev;
+  });
+  const ps=document.getElementById('s1-party');
+  if(ps && !ps.onchange) ps.addEventListener('change',e=>{ S.party=Number(e.target.value)||0; });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  DEMO DATA SEED
+// ═══════════════════════════════════════════════════════════════
+async function seedDemoData() {
+  if (getRes().length > 0 || MODE_FIREBASE || !DEMO_LOCAL_SEED) return;
+  const today=todayISO();
+  const demo=[
+    {id:'RES-DEMO01',date:today,         time:'13:00',party:2,name:'María López',    phone:'+34 611 111 111',email:'maria@email.com',  notes:'Alergia frutos secos',status:'confirmed',createdAt:Date.now()-1e6},
+    {id:'RES-DEMO02',date:today,         time:'13:30',party:4,name:'Carlos Ruiz',    phone:'+34 622 222 222',email:'carlos@email.com', notes:'',                   status:'confirmed',createdAt:Date.now()-2e6},
+    {id:'RES-DEMO03',date:today,         time:'14:00',party:6,name:'Ana Martínez',   phone:'+34 633 333 333',email:'',                notes:'Silla para bebé',    status:'seated',   createdAt:Date.now()-3e6},
+    {id:'RES-DEMO04',date:today,         time:'20:30',party:2,name:'Pedro García',   phone:'+34 644 444 444',email:'pedro@email.com', notes:'',                   status:'confirmed',createdAt:Date.now()-4e6},
+    {id:'RES-DEMO05',date:today,         time:'21:00',party:3,name:'Lucía Sánchez',  phone:'+34 655 555 555',email:'lucia@email.com', notes:'Menú sin gluten',    status:'confirmed',createdAt:Date.now()-5e6},
+    {id:'RES-DEMO06',date:addDays(today,1),time:'13:30',party:8,name:'Empresa ABC',  phone:'+34 666 666 666',email:'rrhh@abc.com',    notes:'Reunión de directivos',status:'confirmed',createdAt:Date.now()-6e6},
+    {id:'RES-DEMO07',date:addDays(today,1),time:'14:00',party:4,name:'Familia Torres',phone:'+34 677 777 777',email:'',              notes:'',                   status:'confirmed',createdAt:Date.now()-7e6},
+    {id:'RES-DEMO08',date:addDays(today,1),time:'21:00',party:2,name:'Javier Moreno',phone:'+34 688 888 888',email:'javi@email.com', notes:'',                   status:'confirmed',createdAt:Date.now()-8e6},
+    {id:'RES-DEMO09',date:addDays(today,2),time:'13:00',party:5,name:'Laura Fernández',phone:'+34 699 999 999',email:'laura@email.com',notes:'Cumpleaños sorpresa',status:'confirmed',createdAt:Date.now()-9e6},
+    {id:'RES-DEMO10',date:addDays(today,2),time:'20:30',party:2,name:'David González', phone:'+34 600 100 200',email:'',             notes:'',                   status:'confirmed',createdAt:Date.now()-10e6},
+    {id:'RES-DEMO11',date:addDays(today,3),time:'14:00',party:10,name:'Grupo Cultural',phone:'+34 600 200 300',email:'cultura@grupo.es',notes:'Premio literario',status:'confirmed',createdAt:Date.now()-11e6},
+  ];
+  if (MODE_FIREBASE) {
+    const batch = db.batch();
+    demo.forEach(r => batch.set(reservasCol.doc(r.id), r));
+    await batch.commit();
+  } else {
+    LS.setItem(KEY_LOCAL_RES, JSON.stringify(demo));
+    _cache.reservas = demo;
+  }
+}
+
+async function resetDemo() {
+  if(!confirm('¿Resetear todos los datos al estado de demo?')) return;
+  if (MODE_FIREBASE) {
+    const snap = await reservasCol.get();
+    const batch = db.batch();
+    snap.docs.forEach(d=>batch.delete(d.ref));
+    await batch.commit();
+    await configDocRef.delete();
+  } else {
+    LS.removeItem(KEY_LOCAL_RES);
+    LS.removeItem(KEY_LOCAL_CFG);
+  }
+  _cache.reservas=[]; _cache.config=null;
+  await seedDemoData();
+  updateHeader(); populatePartySelect(); loadConfigForm(); renderAdminTable();
+  toast('Demo reseteado ✓','ok');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  FIREBASE SETUP UI
+// ═══════════════════════════════════════════════════════════════
+function parseFirebaseConfig(text) {
+  // Try direct JSON
+  try { const o=JSON.parse(text); if(o.projectId) return o; } catch(e){}
+  // Extract object literal from pasted JS code
+  const m = text.match(/\{[^{}]+\}/s);
+  if (m) {
+    try {
+      // Convert JS object to JSON: wrap unquoted keys
+      const json = m[0]
+        .replace(/\/\/.*$/gm,'')  // remove comments
+        .replace(/,\s*\}/g,'}')   // trailing comma
+        .replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g,'"$2":') // quote keys
+        .replace(/'/g,'"');        // single → double quotes
+      const o = JSON.parse(json);
+      if(o.projectId) return o;
+    } catch(e){}
+  }
+  return null;
+}
+
+function saveFirebaseConfig() {
+  const raw  = document.getElementById('setup-config-input').value.trim();
+  const errEl= document.getElementById('setup-error');
+  const cfg  = parseFirebaseConfig(raw);
+  if (!cfg || !cfg.projectId || !cfg.apiKey) {
+    errEl.style.display='block';
+    errEl.textContent='No se pudo leer la configuración. Asegúrate de pegar el objeto completo.';
+    return;
+  }
+  errEl.style.display='none';
+  LS.setItem(KEY_FB_CFG, JSON.stringify(cfg));
+  document.getElementById('setup-overlay').classList.remove('show');
+  document.getElementById('loading-screen').style.display='flex';
+  // Reload to initialize Firebase with new config
+  window.location.reload();
+}
+
+function useLocalMode() {
+  LS.setItem(KEY_FB_CFG, JSON.stringify({projectId:'LOCAL'}));
+  document.getElementById('setup-overlay').classList.remove('show');
+  startLocalMode();
+}
+
+function reconfigureFirebase() {
+  LS.removeItem(KEY_FB_CFG);
+  closeAdmin();
+  document.getElementById('setup-overlay').classList.add('show');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════════
+async function startLocalMode() {
+  MODE_FIREBASE = false;
+  setSyncStatus('offline', 'Modo local — sin sincronización');
+  // Load from localStorage
+  try { _cache.reservas = JSON.parse(LS.getItem(KEY_LOCAL_RES)||'[]'); } catch(e){_cache.reservas=[];}
+  try { _cache.config   = JSON.parse(LS.getItem(KEY_LOCAL_CFG)||'{}'); } catch(e){_cache.config={};}
+  await autocleanup();
+  await seedDemoData();
+  updateHeader();
+  populatePartySelect();
+  document.getElementById('loading-screen').style.display='none';
+  document.getElementById('m-date').min=todayISO();
+  document.getElementById('m-date').max=addDays(todayISO(),getCfg().daysAhead||30);
+}
+
+async function startFirebaseMode(fbCfg) {
+  try {
+    firebase.initializeApp(fbCfg);
+    db          = firebase.firestore();
+    reservasCol = db.collection('reservas');
+    configDocRef= db.collection('config').doc('main');
+    MODE_FIREBASE = true;
+
+    setSyncStatus('live','Conectado a Firebase · Sincronización en tiempo real');
+
+    // Real-time listener: CONFIG
+    configDocRef.onSnapshot(async snap => {
+      if (snap.exists) {
+        _cache.config = snap.data();
+      } else {
+        // First time: write defaults + seed
+        await configDocRef.set(DEFAULTS);
+        _cache.config = DEFAULTS;
+      }
+      updateHeader();
+      populatePartySelect();
+      loadConfigForm();
+    }, err => {
+      console.error('Config listener error:', err);
+      setSyncStatus('error', 'Error de conexión');
+    });
+
+    // Real-time listener: RESERVAS
+    reservasCol.onSnapshot(snap => {
+      _cache.reservas = snap.docs.map(d=>d.data());
+      if (S.adminOpen) renderAdminTable();
+      if (S.step===3)  renderSlots();
+    }, err => {
+      console.error('Reservas listener error:', err);
+      setSyncStatus('error', 'Error de conexión');
+    });
+
+    // Wait for first config load before hiding loading screen
+    await new Promise(resolve=>{
+      const unsub = configDocRef.onSnapshot(snap=>{
+        if(snap.exists||snap._fromCache===false){ unsub(); resolve(); }
+      });
+      setTimeout(resolve, 4000); // max 4s wait
+    });
+
+    await autocleanup();
+    await seedDemoData();
+    document.getElementById('loading-screen').style.display='none';
+    document.getElementById('m-date').min=todayISO();
+  document.getElementById('m-date').max=addDays(todayISO(),getCfg().daysAhead||30);
+
+  } catch(err) {
+    console.error('Firebase init error:', err);
+    setSyncStatus('error','Error Firebase — usando modo local');
+    await startLocalMode();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  FIREBASE — pegar aquí el firebaseConfig del cliente (o dejar null para modo local)
+// ═══════════════════════════════════════════════════════════════
+const FIREBASE_CONFIG = null;
+/* Ejemplo:
+const FIREBASE_CONFIG = {
+  apiKey: "...", authDomain: "...firebaseapp.com", projectId: "...",
+  storageBucket: "...", messagingSenderId: "...", appId: "..."
+};
+*/
+
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = src; s.onload = resolve; s.onerror = () => reject(new Error('No se pudo cargar ' + src));
+    document.head.appendChild(s);
+    setTimeout(() => reject(new Error('Tiempo agotado')), 8000);
+  });
+}
+async function loadFirebaseSdk() {
+  if (window.firebase && firebase.firestore) return;
+  await loadScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js');
+  await loadScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js');
+}
+
+async function init() {
+  let cfg = FIREBASE_CONFIG;
+  if (!cfg) {
+    try { const st = JSON.parse(LS.getItem(KEY_FB_CFG) || 'null'); if (st && st.projectId && st.apiKey) cfg = st; } catch (e) {}
+  }
+  if (cfg && cfg.projectId && cfg.apiKey) {
+    try { await loadFirebaseSdk(); await startFirebaseMode(cfg); return; }
+    catch (e) { console.error(e); }
+  }
+  await startLocalMode();
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+
+
+// ═══════════════════════════════════════════════════════════════
+//  LANDING — interacciones
+// ═══════════════════════════════════════════════════════════════
+(function(){
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+  const reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const fine = !!(window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches);
+  document.documentElement.classList.add('js');
+
+  /* ---------- Logo ---------- */
+  const LOGO_SRC = 'data:image/webp;base64,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';
+  ['#heroLogo','#stampLogo'].forEach(s => { const el = $(s); if (el) el.src = LOGO_SRC; });
+  { const m = $('#brandMark'); if (m) m.innerHTML = '<img alt="" src="'+LOGO_SRC+'">'; }
+
+  /* ---------- Horario ---------- */
+  const DAYS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  const SERVICE = [['13:00','17:00'],['20:00','23:00']];
+  const LATE = [['13:00','17:00'],['20:00','24:00']];
+  const OPENING = {0:SERVICE,1:null,2:null,3:SERVICE,4:SERVICE,5:LATE,6:LATE};
+  const toMin = hm => { const p = hm.split(':'); return Number(p[0])*60+Number(p[1]); };
+
+  function updateOpen(){
+    const now = new Date(), d = now.getDay(), m = now.getHours()*60+now.getMinutes();
+    const badge = $('#openBadge'), txt = $('#openText');
+    if (!badge || !txt) return;
+    const today = OPENING[d] || [];
+    let cur = null;
+    today.forEach(r => { if (m >= toMin(r[0]) && m < toMin(r[1])) cur = r; });
+    if (cur) { badge.classList.add('is-open'); txt.textContent = 'Abierto ahora, hasta las ' + (cur[1]==='24:00'?'00:00':cur[1]); return; }
+    badge.classList.remove('is-open');
+    let next = '';
+    for (let i = 0; i < today.length; i++) { if (m < toMin(today[i][0])) { next = 'hoy a las ' + today[i][0]; break; } }
+    if (!next) {
+      for (let i = 1; i <= 7; i++) {
+        const nd = (d+i)%7, r = OPENING[nd];
+        if (r && r.length) { next = (i===1 ? 'mañana' : 'el ' + DAYS[nd].toLowerCase()) + ' a las ' + r[0][0]; break; }
+      }
+    }
+    txt.textContent = 'Cerrado ahora, abrimos ' + next;
+  }
+  function renderHours(){
+    const ul = $('#visitHours'); if (!ul) return;
+    const today = new Date().getDay();
+    ul.innerHTML = [1,2,3,4,5,6,0].map(d => {
+      const r = OPENING[d];
+      const t = r ? r.map(x => '<i>'+x[0]+'–'+(x[1]==='24:00'?'00:00':x[1])+'</i>').join('') : 'Cerrado';
+      return '<li class="'+(d===today?'today ':'')+(r?'':'closed')+'"><span>'+DAYS[d]+'</span><span>'+t+'</span></li>';
+    }).join('');
+  }
+
+  /* ---------- Carta ---------- */
+  const MENU = [
+    {id:'entrantes', name:'Entrantes', items:[
+      {n:'Pan de ajo', p:'8,50'},
+      {n:'Pan de pizza o focaccia', p:'7,50'},
+      {n:'Carpaccio de ternera', d:'Con virutas de parmesano.', p:'14,90'}
+    ]},
+    {id:'ensaladas', name:'Ensaladas', items:[
+      {n:'Ensalada burrata con aguacate y salmón', p:'15,50'},
+      {n:'Ensalada burrata con tomate, rúcula y jamón serrano', p:'15,50'},
+      {n:'Ensalada La Trattoria', d:'Lechuga, tomate, atún, cebolla, salmón o mozzarella.', p:'14,50'}
+    ]},
+    {id:'pizzas', name:'Pizzas', items:[
+      {n:'Margherita', d:'Tomate y mozzarella.', p:'13,00'},
+      {n:'Prosciutto', d:'Jamón dulce.', p:'14,20'},
+      {n:'Sicilia', d:'Atún, cebolla y aceitunas negras.', p:'14,90'},
+      {n:'Sardegna', d:'Bacon, champiñones y aceitunas.', p:'14,90'},
+      {n:'Vegetale', d:'Champiñones, berenjena, pimiento rojo, calabacín y rúcula.', p:'14,90'},
+      {n:'Campesina', d:'Tomate fresco, queso de cabra, champiñones y rúcula.', p:'14,90'},
+      {n:'Carbonara', d:'Tocino, salsa carbonara y queso de cabra.', p:'14,50'},
+      {n:'Mexicana', d:'Carne picada de ternera, cebolla y picante.', p:'14,50', t:['Picante']},
+      {n:'Calzone farcito', d:'Jamón dulce, champiñones y huevo.', p:'14,90'},
+      {n:'Capricciosa', d:'Cinco quesos, jamón serrano y nueces.', p:'14,90'},
+      {n:'5 Formaggi', d:'Cinco quesos.', p:'15,00'},
+      {n:'4 Stagioni', d:'Champiñones, jamón, alcachofas y aceitunas.', p:'15,50'},
+      {n:'Calabria', d:'Con chorizo picante.', p:'15,50', t:['Picante']},
+      {n:'4 Cerditos', p:'15,50'},
+      {n:'De la casa', d:'Jamón serrano, rúcula y parmesano.', p:'15,50', t:['De la casa']},
+      {n:'Número 1 Italia', d:'Mortadela, burrata, pistachos y un toque de miel.', p:'16,90'},
+      {n:'Menja i Calla', d:'Al gusto del pizzero.', p:'14,90', t:['Sorpresa']},
+      {n:'Sin gluten a elegir', d:'Pizza sin gluten, a tu gusto.', p:'16,50', t:['Sin gluten']}
+    ]},
+    {id:'pastas', name:'Pastas', items:[
+      {n:'Spaghetti a la boloñesa', d:'Tomate y carne picada.', p:'14,00'},
+      {n:'Spaghetti aglio e olio con peperoncino', d:'Ajo, aceite y guindilla.', p:'14,00', t:['Picante']},
+      {n:'Spaghetti carbonara auténtico italiano', d:'Guanciale y yema de huevo.', p:'14,50'},
+      {n:'Spaghetti al pesto y langostinos', p:'14,90'},
+      {n:'Penne a la putanesca con chorizo picante', p:'14,50', t:['Picante']},
+      {n:'Penne con gorgonzola', p:'14,20'},
+      {n:'Lasaña de la casa', p:'14,50', t:['De la casa']},
+      {n:'Tortelloni de carne a la boloñesa', p:'13,90'},
+      {n:'Saccotino de gorgonzola y pera', p:'13,90'},
+      {n:'Triangolo de higos con queso de cabra', d:'Con nueces caramelizadas.', p:'15,00'},
+      {n:'Linguine con almejas y tomate cherry', p:'15,50'}
+    ]},
+    {id:'postres', name:'Postres', items:[
+      {n:'Tiramisú casero', p:'7,50', t:['Casero']},
+      {n:'Panna cotta alla fragola', d:'Con fresa.', p:'7,50'}
+    ]},
+    {id:'bebidas', name:'Bebidas y vinos', items:[
+      {n:'Refrescos', d:'Coca-Cola, Coca-Cola Zero, Fanta naranja o limón, Aquarius naranja o limón, Nestea. 350 ml.', p:'2,10'},
+      {n:'Cerveza Estrella Damm', d:'350 ml.', p:'2,10'},
+      {n:'Agua', d:'330 ml.', p:'1,40'},
+      {n:'Hombre Pez', d:'Vino blanco, Rueda.', p:'14,00'},
+      {n:'La Maldita', d:'Rioja, garnacha 100%.', p:'15,00'},
+      {n:'Lambrusco', p:'15,00'},
+      {n:'Moscato d\'Asti', p:'16,00'}
+    ]}
+  ];
+  let cat = 'pizzas', query = '';
+  const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+  const chipClass = t => t==='Picante' ? 'hot' : (t==='Sorpresa' ? 'sun' : (t==='Sin gluten' ? 'sky' : ''));
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  function renderTabs(){
+    const wrap = $('#menuTabs'); if (!wrap) return;
+    wrap.innerHTML = MENU.map(c => '<button type="button" role="tab" data-cat="'+c.id+'" aria-selected="'+(c.id===cat && !query)+'">'+c.name+'</button>').join('');
+    wrap.classList.toggle('is-dim', !!query);
+  }
+  function renderDishes(animate){
+    const list = $('#dishList'); if (!list) return;
+    let items;
+    if (query) {
+      const q = norm(query);
+      items = [];
+      MENU.forEach(c => c.items.forEach(i => { if (norm(i.n+' '+(i.d||'')).indexOf(q) !== -1) items.push({i:i, c:c.name}); }));
+    } else {
+      items = MENU.filter(c => c.id===cat)[0].items.map(i => ({i:i, c:''}));
+    }
+    list.innerHTML = items.length ? items.map(o => {
+      const i = o.i;
+      const chips = (i.t && i.t.length) ? '<div class="lp-chips">'+i.t.map(t => '<span class="'+chipClass(t)+'">'+esc(t)+'</span>').join('')+'</div>' : '';
+      return '<article class="lp-dish">'+(o.c?'<span class="lp-cat-tag">'+esc(o.c)+'</span>':'')+
+        '<div class="lp-dish-head"><h3>'+esc(i.n)+'</h3><span class="lp-dots"></span><span class="lp-price">'+i.p+' €</span></div>'+
+        (i.d ? '<p>'+esc(i.d)+'</p>' : '')+chips+'</article>';
+    }).join('') : '<p class="lp-empty">No encontramos ese plato. Prueba con otro nombre o ingrediente.</p>';
+    if (animate && !reduce) { list.classList.remove('swap'); void list.offsetWidth; list.classList.add('swap'); }
+  }
+  document.addEventListener('click', e => {
+    const b = e.target.closest ? e.target.closest('[data-cat]') : null;
+    if (!b) return;
+    cat = b.getAttribute('data-cat'); query = '';
+    const s = $('#menuSearch'); if (s) s.value = '';
+    renderTabs(); renderDishes(true);
+  });
+  const search = $('#menuSearch');
+  if (search) search.addEventListener('input', () => { query = search.value.trim(); renderTabs(); renderDishes(true); });
+
+  /* ---------- Cinta de pizzas ---------- */
+  const mq = $('#mqTrack');
+  if (mq) {
+    const leaf = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20C5 9 13 4 21 4c-1 9-8 15-18 16zM3 20C9 15 14 10 21 4" fill="#9DB8D6" stroke="#FBF6EC" stroke-width="1.4" stroke-linejoin="round"/></svg>';
+    const names = MENU.filter(c => c.id==='pizzas')[0].items.map(i => i.n).filter(n => n.indexOf('Sin gluten') === -1);
+    const one = '<span>' + names.map(n => esc(n) + leaf).join('') + '</span>';
+    mq.innerHTML = one + one;
+  }
+
+  /* ---------- Ruleta ---------- */
+  const WHEEL_NAMES = ['Margherita','Número 1 Italia','Calabria','4 Stagioni','De la casa','Campesina','Capricciosa','Carbonara'];
+  const PIZZAS = MENU.filter(c => c.id==='pizzas')[0].items;
+  const SLICES = WHEEL_NAMES.map(n => PIZZAS.filter(p => p.n===n)[0]).filter(Boolean);
+  const FILLS = ['#FBE7E1','#FFFDF8','#E3ECF6','#FBEFCF','#E7EEDD','#FFFDF8','#F7D5CC','#FFFDF8'];
+  const wheel = $('#wheel');
+  let wheelRot = 0, spinning = false;
+  if (wheel && SLICES.length) {
+    const N = SLICES.length, R = 200, step = 360 / N;
+    const pt = (a, r) => { const t = (a - 90) * Math.PI / 180; return [r*Math.cos(t), r*Math.sin(t)]; };
+    let svg = '<circle r="206" fill="#1F1D1A"/>';
+    SLICES.forEach((p, i) => {
+      const a0 = i*step - step/2, a1 = a0 + step;
+      const [x0,y0] = pt(a0, R), [x1,y1] = pt(a1, R);
+      svg += '<path d="M0 0L'+x0.toFixed(2)+' '+y0.toFixed(2)+'A'+R+' '+R+' 0 0 1 '+x1.toFixed(2)+' '+y1.toFixed(2)+'Z" fill="'+FILLS[i%FILLS.length]+'" stroke="#1F1D1A" stroke-width="2.5"/>';
+      const label = p.n.length > 13 ? p.n.replace('Número 1 Italia','Nº 1 Italia') : p.n;
+      svg += '<g transform="rotate('+(i*step)+')"><text x="0" y="-116" text-anchor="middle" transform="rotate(-90 0 -116)" dominant-baseline="middle">'+esc(label)+'</text>'+
+             '<circle cx="0" cy="-182" r="5" fill="'+(i%2?'#D2452E':'#5B7F4A')+'" stroke="#1F1D1A" stroke-width="1.5"/></g>';
+    });
+    svg += '<circle r="200" fill="none" stroke="#1F1D1A" stroke-width="3"/>';
+    wheel.innerHTML = svg;
+  }
+  function spin(){
+    if (!wheel || spinning || !SLICES.length) return;
+    spinning = true;
+    const N = SLICES.length, step = 360 / N;
+    const idx = Math.floor(Math.random() * N);
+    const jitter = (Math.random() - .5) * step * .6;
+    const base = Math.ceil(wheelRot / 360) * 360;
+    wheelRot = base + 360 * (reduce ? 1 : 5) + (360 - idx * step) + jitter;
+    const btns = [$('#spinBtn'), $('#hubBtn')];
+    btns.forEach(b => { if (b) b.disabled = true; });
+    const pick = $('#pick');
+    if (pick) pick.innerHTML = '<p class="lp-pick-empty lp-hand">Girando…</p>';
+    wheel.style.transform = 'rotate(' + wheelRot + 'deg)';
+    const ptr = $('.lp-pointer');
+    let ticks = 0;
+    const tickTimer = (!reduce && ptr) ? setInterval(() => { ticks++; ptr.classList.remove('tick'); void ptr.offsetWidth; ptr.classList.add('tick'); if (ticks > 22) clearInterval(tickTimer); }, 120 + ticks * 8) : null;
+    const done = () => {
+      if (tickTimer) clearInterval(tickTimer);
+      spinning = false;
+      btns.forEach(b => { if (b) b.disabled = false; });
+      const p = SLICES[idx];
+      if (pick) pick.innerHTML = '<div class="lp-pick-card"><small>¡te toca!</small><h3>'+esc(p.n)+'</h3>'+(p.d?'<p>'+esc(p.d)+'</p>':'')+
+        '<div class="lp-pick-row"><span class="lp-pick-price">'+p.p+' €</span><a href="#reservar">Reservar mesa y pedirla →</a></div></div>';
+      const sb = $('#spinBtn span'); if (sb) sb.textContent = 'Girar otra vez';
+    };
+    setTimeout(done, reduce ? 50 : 4300);
+  }
+  ['#spinBtn','#hubBtn'].forEach(s => { const b = $(s); if (b) b.addEventListener('click', spin); });
+
+  /* ---------- Copiar dirección ---------- */
+  const copyBtn = $('#copyAddr');
+  if (copyBtn) copyBtn.addEventListener('click', async () => {
+    const txt = ($('#visitAddr')||{}).textContent || '';
+    const orig = copyBtn.textContent;
+    try { await navigator.clipboard.writeText(txt); copyBtn.textContent = '¡Copiada!'; setTimeout(() => copyBtn.textContent = orig, 1600); }
+    catch(_) { const r = document.createRange(); r.selectNodeContents($('#visitAddr')); const s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+  });
+
+  /* ---------- Menú móvil ---------- */
+  const toggle = $('#navToggle'), sheet = $('#navSheet');
+  function setSheet(open){
+    if (!toggle || !sheet) return;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    sheet.hidden = !open;
+  }
+  if (toggle) toggle.addEventListener('click', () => setSheet(toggle.getAttribute('aria-expanded') !== 'true'));
+  if (sheet) sheet.addEventListener('click', e => { if (e.target.closest('a')) setSheet(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setSheet(false); });
+
+  /* ---------- Scroll: nav, barra de progreso, cinta, aro ---------- */
+  const nav = $('#lpNav'), fab = $('#lpFab'), bar = $('#lpProgress'), ring = $('.lp-ringtext');
+  const mqAnim = (mq && mq.getAnimations) ? mq.getAnimations()[0] : null;
+  let bookVisible = false, lastY = window.scrollY, lastT = performance.now(), ticking = false, boost = 0;
+  function onScroll(){
+    const y = window.scrollY, h = document.documentElement.scrollHeight - window.innerHeight;
+    if (bar) bar.style.transform = 'scaleX(' + (h > 0 ? Math.min(1, y / h) : 0) + ')';
+    if (nav) {
+      nav.classList.toggle('is-scrolled', y > 8);
+      const open = toggle && toggle.getAttribute('aria-expanded') === 'true';
+      nav.classList.toggle('is-hidden', !open && y > 520 && y > lastY + 2);
+      if (y < lastY - 2) nav.classList.remove('is-hidden');
+    }
+    if (fab) fab.classList.toggle('show', y > 640 && !bookVisible);
+    if (ring && !reduce) ring.style.setProperty('--ring', (y * .18).toFixed(1) + 'deg');
+    const now = performance.now(), v = Math.abs(y - lastY) / Math.max(16, now - lastT);
+    boost = Math.min(5, Math.max(boost, v * 3));
+    lastY = y; lastT = now; ticking = false;
+  }
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, {passive:true});
+  onScroll();
+  if (mqAnim && !reduce) {
+    (function loop(){ boost *= .94; mqAnim.playbackRate = 1 + boost; requestAnimationFrame(loop); })();
+  }
+
+  /* ---------- Revelado, contadores y enlace activo ---------- */
+  const reveals = $$('[data-reveal]');
+  function countUp(el){
+    const end = Number(el.getAttribute('data-count')); if (!end || reduce) return;
+    const start = end > 100 ? end - 40 : 0, dur = 1300, t0 = performance.now();
+    (function f(t){ const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = String(Math.round(start + (end - start) * e)); if (k < 1) requestAnimationFrame(f); })(t0);
+  }
+  if ('IntersectionObserver' in window) {
+    const ro = new IntersectionObserver(entries => entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      en.target.classList.add('in');
+      en.target.querySelectorAll('[data-count]').forEach(countUp);
+      ro.unobserve(en.target);
+    }), {rootMargin:'0px 0px -10% 0px', threshold:.12});
+    reveals.forEach(el => ro.observe(el));
+    const links = $$('[data-nav]');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (en.target.id === 'reservar') { bookVisible = en.isIntersecting; onScroll(); }
+        if (en.isIntersecting) links.forEach(a => a.setAttribute('aria-current', String(a.getAttribute('href') === '#'+en.target.id)));
+      });
+    }, {rootMargin:'-45% 0px -50% 0px'});
+    ['casa','ruleta','carta','reservar','visita','preguntas'].forEach(id => { const el = document.getElementById(id); if (el) io.observe(el); });
+  } else {
+    reveals.forEach(el => el.classList.add('in'));
+  }
+
+  /* ---------- Hero: paralaje con el puntero ---------- */
+  const art = $('#heroArt');
+  if (art && !reduce && fine) {
+    const layers = Array.from(art.querySelectorAll('.lp-par'));
+    let raf = 0;
+    const hero = art.closest('.lp-hero');
+    hero.addEventListener('pointermove', e => {
+      const r = hero.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => layers.forEach(l => {
+        const k = Number(l.getAttribute('data-depth')) || 0;
+        l.style.transform = 'translate3d('+(x*k*1.4).toFixed(2)+'px,'+(y*k*1.4).toFixed(2)+'px,0)';
+      }));
+    });
+    hero.addEventListener('pointerleave', () => layers.forEach(l => l.style.transform = ''));
+  }
+
+  /* ---------- Botones magnéticos y tarjetas con inclinación ---------- */
+  if (fine && !reduce) {
+    $$('.lp-magnetic').forEach(b => {
+      b.addEventListener('pointermove', e => {
+        const r = b.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width/2, y = e.clientY - r.top - r.height/2;
+        b.style.transform = 'translate('+(x*.18).toFixed(1)+'px,'+(y*.28 - 2).toFixed(1)+'px)';
+      });
+      b.addEventListener('pointerleave', () => { b.style.transform = ''; });
+    });
+    $$('.lp-tilt').forEach(c => {
+      c.addEventListener('pointermove', e => {
+        if (!c.classList.contains('in')) return;
+        const r = c.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        c.classList.add('tilting');
+        c.style.transform = 'perspective(700px) rotateX('+(-y*10).toFixed(2)+'deg) rotateY('+(x*12).toFixed(2)+'deg) translateY(-6px)';
+      });
+      c.addEventListener('pointerleave', () => { c.classList.remove('tilting'); c.style.transform = ''; });
+    });
+  }
+
+  /* ---------- Confeti al confirmar una reserva ---------- */
+  const conf = $('#confetti'), s5 = document.getElementById('step-5');
+  function burst(){
+    if (!conf || reduce) return;
+    const colors = ['#D2452E','#F2C14E','#9DB8D6','#5B7F4A','#1F1D1A'];
+    let html = '';
+    for (let i = 0; i < 70; i++) {
+      const c = colors[i % colors.length], left = Math.random()*100, x = (Math.random()-.5)*240;
+      const d = 2.2 + Math.random()*1.6, delay = Math.random()*.4, round = i % 3 === 0;
+      html += '<i style="left:'+left.toFixed(1)+'%;background:'+c+';--x:'+x.toFixed(0)+'px;--d:'+d.toFixed(2)+'s;--rr:'+(360+Math.random()*540).toFixed(0)+'deg;animation-delay:'+delay.toFixed(2)+'s;border-radius:'+(round?'50%':'3px')+';width:'+(8+Math.random()*8).toFixed(0)+'px;height:'+(round?10:16)+'px"></i>';
+    }
+    conf.innerHTML = html;
+    setTimeout(() => { conf.innerHTML = ''; }, 4600);
+  }
+  if (s5 && 'MutationObserver' in window) {
+    let was = s5.classList.contains('active');
+    new MutationObserver(() => { const now = s5.classList.contains('active'); if (now && !was) burst(); was = now; })
+      .observe(s5, {attributes:true, attributeFilter:['class']});
+  }
+
+  renderTabs(); renderDishes(false); renderHours(); updateOpen();
+  setInterval(updateOpen, 60000);
+})();
+
+</script>
+</body>
+</html>
